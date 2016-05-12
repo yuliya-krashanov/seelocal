@@ -1,5 +1,5 @@
+var gulp = require('gulp');
 var elixir = require('laravel-elixir');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -11,25 +11,29 @@ var elixir = require('laravel-elixir');
  |
  */
 
+
+gulp.task("copyfiles", function() {
+
+    gulp.src("bower_components/jquery/dist/jquery.min.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+
+});
+
 elixir(function(mix) {
-    mix.sass('*.scss');
+    mix.sass('*.scss', 'resources/assets/css');
 
 
     mix.styles([
-       /* 'bootstrap.css',
-        'fonts.css',
-        'layout.css',
-        'pop_up.css',
-        'responsive.css',
-        'app.css'*/
-    ], null, 'public/css');
+        'bootstrap.min.css',
+        'app.css'
+    ], null, 'resources/assets/css');
 
     mix.scripts([
-       /* 'bootstrap.min.js',
-        'typeahead.jquery.min.js',
+        'jquery.min.js',
+        'bootstrap.min.js',
         'app.js',
-        'stripe.js',*/
-    ], null, 'public/js')
+    ], null, 'resources/assets/js')
         .scripts([
           /*  'bootstrap.min.js',
             'dataTables.bootstrap.min.js',*/
