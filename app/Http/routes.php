@@ -14,4 +14,9 @@
 
 Route::auth();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', function(){ return redirect('/step/1'); });
+
+
+Route::get('/step/{step}', ['middleware' => 'step', 'uses' => 'StepsController@show']);
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

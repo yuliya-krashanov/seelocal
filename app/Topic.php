@@ -10,7 +10,7 @@ class Topic extends Model
 
     protected $fillable = ['topic_name', 'topic_description', 'status'];
 
-    protected $dates = ['created_date', 'modified_date'];
+    protected $dates = ['created_at', 'updated_at'];
 
     public function createdAdmin(){
         return $this->belongsTo('App\Administrator', 'created_by');

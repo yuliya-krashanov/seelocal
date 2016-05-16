@@ -8,7 +8,7 @@ class Order extends Model
 {
     protected $table = 'orders';
 
-    protected $dates = ['created_date', 'modified_date'];
+    protected $dates = ['created_at', 'updated_at'];
 
     protected $casts = [];
 

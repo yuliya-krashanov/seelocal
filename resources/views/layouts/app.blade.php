@@ -17,7 +17,7 @@
 
 
 </head>
-<body id="app-layout">
+<body ng-app="seelocal">
     <header>
         @if (Auth::check())
         <nav class="navbar navbar-default navbar-static-top">
@@ -58,6 +58,11 @@
                 </div>
             </div>
         </nav>
+
+        @else
+            <nav>
+                <a href="{{ url('/login') }}" class="focus">Log In</a> | <a href="{{ url('/register') }}">Register</a>
+            </nav>
 
         @endif
     </header>

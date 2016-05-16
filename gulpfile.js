@@ -13,10 +13,8 @@ var elixir = require('laravel-elixir');
 
 
 gulp.task("copyfiles", function() {
-
-    gulp.src("bower_components/jquery/dist/jquery.min.js")
+    gulp.src("bower_components/angular/angular.min.js")
         .pipe(gulp.dest("resources/assets/js/"));
-
 
 });
 
@@ -30,6 +28,7 @@ elixir(function(mix) {
     ], null, 'resources/assets/css');
 
     mix.scripts([
+        'angular.min.js',
         'jquery.min.js',
         'bootstrap.min.js',
         'app.js',

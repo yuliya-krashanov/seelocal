@@ -9,7 +9,7 @@ class User extends Authenticatable
 
     protected $table = 'user_management';
 
-    protected $dates = ['created_date', 'modified_date'];
+    protected $dates = ['created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -28,4 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
+    public function setStatusAttribute($value){
+        $this->attributes['status'] = true;
+    }
+
 }
