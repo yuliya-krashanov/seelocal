@@ -1,12 +1,159 @@
+@import "fonts";
+
+// fonts
+$mainFontSize: 18px;
+$headingFontSize: 30px;
+
+// colors
+$green: #4dc01d;
+$grey: #424040;
+$black: #252525;
+$lightGrey: #fafafa;
+$borderGrey: #f6f6f6;
+$footerBack: #464a4a;
+
+//heights
+$stepsHeight: 70px;
+$footerHeight: 58px;
+
+@mixin flex($align, $justify, $direction:row, $inline:''){
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  @if $inline == 'yes' {
+    display: inline-flex;
+  }
+  @else {
+    display: flex;
+  }
+}
 /* login page styles */
 
 
+/* main page styles */
 
+html, body { height: 100%; }
+body {
+  font-family: $latoLight;
+  font-size: $mainFontSize;
+  color: $black;
+}
 
+a:hover{
+  text-decoration: none;
+}
+ul{
+  padding: 0;
+}
+header{
+  nav.navbar{
+    min-height: 77px;
 
+    .navbar-right{
+      li{
+        display: inline-block;
+        font-size: 16px;
+        float: none;
+        a{
+          color: $black;
+        }
+      }
+    }
+  }
+}
 
+main{
+  height: auto;
+  min-height: calc(100% - 97px);
+  padding-bottom: $footerHeight;
+  .row{
+    margin: 0 32px;
+  }
+}
 
+section.intro{
+  h2{
+    font-family: $latoRegular;
+    font-size: $headingFontSize;
+  }
+  h5{
+    font-size: $mainFontSize;
+    span{
+      font-family: $latoRegular;
+      color: $green;
+    }
+  }
+}
 
+section.steps-navigation{
+  margin: 25px 0 35px;
+  ul{
+    width: 100%;
+    height: $stepsHeight;
+    position: relative;
+    li{
+      display: inline-block;
+      background-color: $grey;
+      height: $stepsHeight;
+      border-radius: 38px;
+      border: 3px solid #fff;
+      position: absolute;
+      width: 25%;
+      box-sizing: content-box;
+      a{
+        color: #fff;
+        width: 100%;
+        height: 100%;
+        cursor: default;
+        @include flex(center, center);
+      }
+      &.active{
+        background-color: $green;
+      }
+      &.passed{
+        cursor: pointer;
+        background-image: url('../../images/completed_step.png');
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}
 
+section.step{
+  border: 2px solid $borderGrey;
+  width: 100%;
+  border-radius: 2px;
+  min-height: 415px;
+  aside{
+    background-color: $lightGrey;
+    height: 100%;
+    width: 25%;
+    ul{
+      width: 100%;
+      margin-bottom: 0;
+      li{
+        width: 100%;
+        height: 70px;
+        cursor: pointer;
+        list-style-type: none;
+        padding-left: 25px;
+        border: 1px solid $borderGrey;
+        @include flex(center, flex-start);
+      }
+    }
+  }
+}
 
+section.buttons{
+  @include flex(center, space-between);
+  color: $green;
+}
 
+footer{
+  width: 100%;
+  position: relative;
+  margin-top: -$footerHeight;
+  height: $footerHeight;
+  clear: both;
+  background-color: $footerBack;
+}

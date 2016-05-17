@@ -1,0 +1,21 @@
+@mixin fontFace($familyName, $fileName) {
+  @font-face {
+    font-family: #{$familyName};
+    src: url('#{$fileName}.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@include fontFace('LatoBlack', '../../fonts/Lato/Lato-Black');
+@include fontFace('LatoBold', '../../fonts/Lato/Lato-Bold');
+@include fontFace('LatoHairline', '../../fonts/Lato/Lato-Hairline');
+@include fontFace('LatoLight', '../../fonts/Lato/Lato-Light');
+@include fontFace('LatoRegular', '../../fonts/Lato/Lato-Regular');
+
+
+$latoBlack: 'LatoBlack', sans-serif;
+$latoBold: 'LatoBold', sans-serif;
+$latoHairline: 'LatoHairline', sans-serif;
+$latoLight: 'LatoLight', sans-serif;
+$latoRegular: 'LatoRegular', sans-serif;

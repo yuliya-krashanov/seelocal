@@ -16,6 +16,7 @@ Route::auth();
 
 Route::get('/', function(){ return redirect('/step/1'); });
 
+Route::get('/account',  ['middleware' => 'auth', 'uses' => 'AccountController@index']);
 
 Route::get('/step/{step}', ['middleware' => 'step', 'uses' => 'StepsController@show']);
 

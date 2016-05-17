@@ -1,5 +1,5 @@
-<section class="step">
-    <nav>
+
+    <aside>
         <ul>
             <li>Ad Placement</li>
             <li>Brand Awareness</li>
@@ -8,8 +8,7 @@
             <li>Sales</li>
             <li>Video Views</li>
         </ul>
-    </nav>
-    form
+    </aside>
     <div class="form-wrap"></div>
     <div class="form-wrap"></div>
     <div class="form-wrap"></div>
@@ -17,4 +16,3 @@
     <div class="form-wrap"></div>
     <div class="form-wrap"></div>
 
-</section>

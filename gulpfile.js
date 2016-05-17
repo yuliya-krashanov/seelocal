@@ -12,27 +12,27 @@ var elixir = require('laravel-elixir');
  */
 
 
-gulp.task("copyfiles", function() {
+/*gulp.task("copyfiles", function() {
     gulp.src("bower_components/angular/angular.min.js")
-        .pipe(gulp.dest("resources/assets/js/"));
+        .pipe(gulp.dest("public/js/"));
 
-});
+});*/
 
 elixir(function(mix) {
-    mix.sass('*.scss', 'resources/assets/css');
+    mix.sass('app.scss', 'public/css');
 
 
     mix.styles([
         'bootstrap.min.css',
         'app.css'
-    ], null, 'resources/assets/css');
+    ], null, 'public/css');
 
     mix.scripts([
         'angular.min.js',
         'jquery.min.js',
         'bootstrap.min.js',
         'app.js',
-    ], null, 'resources/assets/js')
+    ], null, 'public/js')
         .scripts([
           /*  'bootstrap.min.js',
             'dataTables.bootstrap.min.js',*/
