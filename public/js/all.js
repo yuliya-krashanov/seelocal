@@ -330,9 +330,9 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     })
-    .controller('StepsController', function($scope){
+    .controller('StepsController', ['$scope', function($scope){
 
-    });
+    }]);
 }());
 
 

@@ -13,6 +13,7 @@ class CreateCampaignObjectivesTable extends Migration
     public function up()
     {
         Schema::create('campaign_objectives', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('title');
             $table->string('excerpt');
             $table->text('description');

@@ -2,6 +2,7 @@
 
 // fonts
 $mainFontSize: 18px;
+$littleFontSize: 16px;
 $headingFontSize: 30px;
 
 // colors
@@ -52,7 +53,7 @@ header{
     .navbar-right{
       li{
         display: inline-block;
-        font-size: 16px;
+        font-size: $littleFontSize;
         float: none;
         a{
           color: $black;
@@ -156,4 +157,16 @@ footer{
   height: $footerHeight;
   clear: both;
   background-color: $footerBack;
+  color: #fff;
+  position: relative;
+  font-size: $littleFontSize;
+  & > *{
+    height: 100%;
+  }
+  li{
+    display: inline-block;
+    a{
+      color: #fff;
+    }
+  }
 }

@@ -3,9 +3,9 @@
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     })
-    .controller('StepsController', function($scope){
+    .controller('StepsController', ['$scope', function($scope){
 
-    });
+    }]);
 }());
 
 
