@@ -8,7 +8,7 @@
     <title>Seelocal</title>
 
     <!-- Fonts -->
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
 
     <!-- Styles -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">--}}
@@ -42,7 +42,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
 
-                        <li><a href="https://seelocal.co.uk/#contact">Contact Us</a></li>  |
+                        <li><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
                         <li><a href="{{ url('/account') }}">Your Account</a></li>
 
                         {{--<li class="dropdown">
@@ -77,7 +77,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="pull-left">&copy; SeeLocal</div>
+                <div class="pull-left copyright">&copy; <a href="http://seelocal.co.uk">SeeLocal</a></div>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ url('/terms-conditions') }}">Terms & Conditions</a></li> |

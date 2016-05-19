@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Campaign_Objective;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,7 +13,17 @@ class StepsController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param Request $request
+     */
+    public function getObjectives(Request $request){
+       return Campaign_Objective::all()->toJson();
+    }
 
+    /**
+     * @param $step
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($step){
         $steps_desc = [
             1 => 'choose the objective of your campaign',
@@ -23,4 +34,12 @@ class StepsController extends Controller
         ];
         return view('steps.main', compact('step', 'steps_desc'));
     }
+
+    public function saveStepData(Request $request){
+        $data = $request->all();
+        foreach($data as $name => $item){
+            $request->session()->put($name, $item);
+        }
+    }
+
 }

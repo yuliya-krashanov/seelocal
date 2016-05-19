@@ -27,16 +27,16 @@
         </ul>
     </section>
 
-    <section class="step">
+    <section class="step" ng-controller="TabsController">
         @include('steps.'.$step)
     </section>
 
     <section class="buttons">
-        @if($step !== 1)
-            <div class="prev"><a href="{{ url('/step', [$step - 1]) }}"><i class="fa"></i>Back</a></div>
+        @if($step != 1)
+            <div class="prev pull-left"><a href="{{ url('/step', [$step - 1]) }}"><i class="fa fa-angle-left" aria-hidden="true"></i>Back</a></div>
         @endif
-        @if($step !== 5)
-            <div class="next"><a href="{{ url('/step', [$step + 1]) }}">Next Step<i class="fa"></i></a></div>
+        @if($step != 5)
+            <div class="next pull-right"><a href="{{ url('/step', [$step + 1]) }}">Next Step<i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
         @endif
     </section>
 

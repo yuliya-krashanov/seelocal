@@ -20,4 +20,6 @@ Route::get('/account',  ['middleware' => 'auth', 'uses' => 'AccountController@in
 
 Route::get('/step/{step}', ['middleware' => 'step', 'uses' => 'StepsController@show']);
 
+Route::post('/objectives', 'StepsController@getObjectives');
+
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

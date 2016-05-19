@@ -17,45 +17,55 @@ $footerBack: #464a4a;
 $stepsHeight: 70px;
 $footerHeight: 58px;
 
-@mixin flex($align, $justify, $direction:row, $inline:''){
+@mixin flex($align, $justify, $direction: row, $inline: '') {
   align-items: $align;
   justify-content: $justify;
   flex-direction: $direction;
   @if $inline == 'yes' {
     display: inline-flex;
-  }
-  @else {
+  } @else {
     display: flex;
   }
 }
-/* login page styles */
 
+@mixin paddingUpBottom($top, $bottom) {
+  padding-top: $top;
+  padding-bottom: $bottom;
+}
+
+/* login page styles */
 
 /* main page styles */
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: $latoLight;
   font-size: $mainFontSize;
   color: $black;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
 }
-ul{
+
+ul {
   padding: 0;
 }
-header{
-  nav.navbar{
+
+header {
+  nav.navbar {
     min-height: 77px;
 
-    .navbar-right{
-      li{
+    .navbar-right {
+      li {
         display: inline-block;
         font-size: $littleFontSize;
         float: none;
-        a{
+        a {
+          @include paddingUpBottom(27px, 27px);
           color: $black;
         }
       }
@@ -63,36 +73,36 @@ header{
   }
 }
 
-main{
+main {
   height: auto;
   min-height: calc(100% - 97px);
   padding-bottom: $footerHeight;
-  .row{
+  .row {
     margin: 0 32px;
   }
 }
 
-section.intro{
-  h2{
+section.intro {
+  h2 {
     font-family: $latoRegular;
     font-size: $headingFontSize;
   }
-  h5{
+  h5 {
     font-size: $mainFontSize;
-    span{
+    span {
       font-family: $latoRegular;
       color: $green;
     }
   }
 }
 
-section.steps-navigation{
+section.steps-navigation {
   margin: 25px 0 35px;
-  ul{
+  ul {
     width: 100%;
     height: $stepsHeight;
     position: relative;
-    li{
+    li {
       display: inline-block;
       background-color: $grey;
       height: $stepsHeight;
@@ -101,17 +111,17 @@ section.steps-navigation{
       position: absolute;
       width: 25%;
       box-sizing: content-box;
-      a{
+      a {
         color: #fff;
         width: 100%;
         height: 100%;
         cursor: default;
         @include flex(center, center);
       }
-      &.active{
+      &.active {
         background-color: $green;
       }
-      &.passed{
+      &.passed {
         cursor: pointer;
         background-image: url('../../images/completed_step.png');
         background-repeat: no-repeat;
@@ -120,37 +130,110 @@ section.steps-navigation{
   }
 }
 
-section.step{
+section.step {
   border: 2px solid $borderGrey;
   width: 100%;
-  border-radius: 2px;
+  border-radius: 5px;
   min-height: 415px;
-  aside{
-    background-color: $lightGrey;
+  height: 415px;
+  position: relative;
+  .wrap {
+    width: 100%;
     height: 100%;
-    width: 25%;
-    ul{
-      width: 100%;
-      margin-bottom: 0;
-      li{
+    aside {
+      background-color: $lightGrey;
+      height: 100%;
+      width: 25%;
+      float: left;
+      ul {
         width: 100%;
-        height: 70px;
-        cursor: pointer;
-        list-style-type: none;
-        padding-left: 25px;
-        border: 1px solid $borderGrey;
-        @include flex(center, flex-start);
+        margin-bottom: 0;
+        li {
+          width: 100%;
+          height: 70px;
+          cursor: pointer;
+          list-style-type: none;
+          padding-left: 25px;
+          border: 1px solid $borderGrey;
+          border-left: none;
+          @include flex(center, flex-start);
+          &:first-child {
+            border-top: none;
+          }
+          &:last-child {
+            border-bottom: none;
+          }
+          &.active {
+            background-color: #fff;
+            color: $green;
+            border-right: none;
+          }
+        }
+      }
+    }
+    .content {
+      float: right;
+      width: 75%;
+      height: 100%;
+      .form-wrap {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        @include flex(center, center, column);
+        .title {
+          color: $green;
+          span {
+            font-family: $latoRegular;
+          }
+        }
+        .desc {
+          max-width: 37%;
+          text-align: center;
+        }
+        .image {
+          margin-bottom: 25px;
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: $lightGrey;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: $green;
+        border-radius: 3px;
       }
     }
   }
 }
 
-section.buttons{
-  @include flex(center, space-between);
-  color: $green;
+section.buttons {
+  margin-top: 30px;
+  .next i {
+    margin-left: 13px;
+  }
+  .prev i {
+    margin-right: 13px;
+  }
+  a, a:hover {
+    color: $green;
+    i {
+      width: 25px;
+      height: 25px;
+      color: #fff;
+      font-size: 25px;
+      border-radius: 50%;
+      background-color: $green;
+      text-align: center;
+      position: relative;
+      top: 2px;
+    }
+  }
 }
 
-footer{
+footer {
   width: 100%;
   position: relative;
   margin-top: -$footerHeight;
@@ -158,15 +241,23 @@ footer{
   clear: both;
   background-color: $footerBack;
   color: #fff;
-  position: relative;
   font-size: $littleFontSize;
-  & > *{
-    height: 100%;
+  .copyright {
+    @include paddingUpBottom(18px, 18px);
   }
-  li{
-    display: inline-block;
-    a{
-      color: #fff;
+  ul.nav {
+    li {
+      display: inline-block;
+      float: none;
+      a {
+        @include paddingUpBottom(18px, 18px);
+        &:hover {
+          background-color: inherit;
+        }
+      }
     }
+  }
+  a, a:hover {
+    color: #fff;
   }
 }
