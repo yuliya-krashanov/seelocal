@@ -115,7 +115,8 @@ section.steps-navigation {
       section.steps-navigation ul li.passed {
         cursor: pointer;
         background-image: url("../../images/completed_step.png");
-        background-repeat: no-repeat; }
+        background-repeat: no-repeat;
+        background-position: 73% 50%; }
 
 section.step {
   border: 2px solid #f6f6f6;

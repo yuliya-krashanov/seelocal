@@ -1,0 +1,21 @@
+<section class="intro">
+    <h2>Setup Your Campaign</h2>
+    <h5><span>Step <% step %></span> | <% stepsDesc[step-1] %></h5>
+</section>
+
+<section class="steps-navigation">
+    <ul>
+        <li ng-repeat="stepNum in [1,2,3,4,5]" ng-class="{active: isStepActive(stepNum), passed: isStepPassed(stepNum)}" style="left: <% leftMarginPer*(stepNum-1) %>%; z-index: <% 7 - stepNum %>">
+            <a href="/step/<% stepNum %>">Step <% stepNum %></a>
+        </li>
+    </ul>
+</section>
+
+<section class="step" ng-controller="TabsController">
+  <step-content step="<% step %>"></step-content>
+</section>
+
+<section class="buttons">
+    <div ng-hide="step == 1" class="prev pull-left"><a href="/step/<% +step-1  %>"><i class="fa fa-angle-left" aria-hidden="true"></i>Back</a></div>
+    <div ng-hide="step == 5" class="next pull-right"><a href="/step/<% +step+1   %>">Next Step<i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
+</section>
