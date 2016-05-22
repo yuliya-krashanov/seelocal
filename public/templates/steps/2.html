@@ -1,0 +1,79 @@
+<div class="wrap" ng-controller="ObjectivesController">
+    <aside>
+        <ul>
+            <li ng-class="{ active:isSelectedTab(1) }" ng-click="selectTab(1)">Details</li>
+            <li ng-class="{ active:isSelectedTab(2) }" ng-click="selectTab(2)">Location</li>
+            <li ng-class="{ active:isSelectedTab(3) }" ng-click="selectTab(3)">Demographics</li>
+            <li ng-class="{ active:isSelectedTab(4) }" ng-click="selectTab(4)">Interests</li>
+            <li ng-class="{ active:isSelectedTab(5) }" ng-click="selectTab(5)">Keywords</li>
+            <li ng-class="{ active:isSelectedTab(6) }" ng-click="selectTab(6)">Target Websites</li>
+        </ul>
+    </aside>
+    <div class="content">
+        <form action="">
+            <div class="form-wrap">
+                <p>Enter the <span>name of your campaign</span> and the <span>phone number<span> you would like us to include on the landing page, which users can use to get in touch with you</p>
+                <input type="text" placeholder="Campaign Name">
+                <input type="text" placeholder="Phone Number">
+            </div>
+            <div class="form-wrap">
+                <p>Enter the target <span>locations</span> of your campaign</p>
+                <div class="location" ng-repeat="location in locations">
+                    <input type="text" placeholder="Location" ng-model="location.location">
+                    <input type="text" placeholder="Target Towns/Cities" ng-model="location.cities">
+                    <input type="text" placeholder="Postcode(s) optional" ng-model="location.postcode">
+                    <select name="" id="" ng-model="location.radius">
+                        <option value="">Mile Radius</option>
+                        <option value="">5</option>
+                        <option value="">10</option>
+                        <option value="">15</option>
+                    </select>
+                </div>
+                <div class="link" ng-click="addLocation()">Add more locations</div>
+            </div>
+
+            <div class="form-wrap">
+                <p>Enter the <span>demographics</span> of your taget audience</p>
+                <input type="text" placeholder="Age" ng-model="age">
+                <input type="text" placeholder="Gender(s)" ng-model="genders">
+                <input type="text" placeholder="Languages" ng-model="languages">                
+            </div>
+
+            <div class="form-wrap">
+                <p>What is your <span>target audience interested in</span>? Search for any words, phrases or topics that is relevant to your business/audience and add them to your campaign.</p>
+                <input type="text" placeholder="Search" ng-model="searchInterest">
+                <div class="col-sm-6">
+                    <p>Select to add</p>
+                    <ul>
+                        <li ng-repeat="interest in interests | filter: searchInterest"><% interest.title %><span ng-click="selectInterest(interest.id)"></span></li>
+                    </ul>
+                </div>             
+                <div class="col-sm-6">
+                    <p>Selected Interests</p>
+                    <ul>
+                        <li ng-repeat="interest in selectedInterests"><% interest.title %><span ng-click="unselectInterest(interest.id)"></span></li>
+                    </ul>
+                </div>  
+                <div class="link" ng-click="selectAllInterests()">Add all</div>           
+            </div>
+
+            <div class="form-wrap">
+                <p>Type in any <span>keywords</span> that are relevant to your business, product or service. Try to think of any words/phrases that your target audience may be searching for.</p>
+                <input type="text" placeholder="" ng-repeat="keyword in keywords">  
+                <div class="link" ng-click="addMoreKeywords()">Add more</div>                           
+            </div>
+            
+            <div class="form-wrap">
+                <p>Type in any <span>keywords</span> that are relevant to your business, product or service. Try to think of any words/phrases that your target audience may be searching for.</p>
+                <input type="text" placeholder="" ng-repeat="keyword in keywords">  
+                <div class="link" ng-click="addMoreKeywords()">Add more</div>                           
+            </div>
+
+            <div class="form-wrap">
+                <p>Type in any relevant <span>websites</span> that you would like your ads to appear on. Please note that not all of the websites may be in our network, so they will not be approved.</p>
+                <input type="text" placeholder="" ng-repeat="website in websites">  
+                <div class="link" ng-click="addMoreWebsite()">Add more</div>                           
+            </div>
+        </form>    
+    </div>
+</div>

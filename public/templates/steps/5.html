@@ -1,0 +1,29 @@
+<div class="wrap" ng-controller="ObjectivesController">
+    <aside>
+        <ul>
+            <li ng-class="{ active:isSelectedTab(1) }" ng-click="selectTab(1)">Campaign Overview</li>
+            <li ng-class="{ active:isSelectedTab(2) }" ng-click="selectTab(2)">Demographics and Targeting</li>
+            <li ng-class="{ active:isSelectedTab(3) }" ng-click="selectTab(3)">Images</li>
+            <li ng-class="{ active:isSelectedTab(4) }" ng-click="selectTab(4)">Pay now</li>          
+        </ul>
+    </aside>
+    <div class="content">
+        <form action="">
+            <div class="form-wrap">
+                <ul class="overview">
+                    <li ng-repeat="data in overview"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
+                </ul> 
+            </div> 
+            <div class="form-wrap">
+                <ul class="overview">
+                    <li ng-repeat="data in targeting"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
+                </ul> 
+            </div> 
+            <div class="form-wrap">
+                <ul class="overview">
+                    <li ng-repeat="data in targeting"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
+                </ul> 
+            </div> 
+        </form>    
+    </div>
+</div>

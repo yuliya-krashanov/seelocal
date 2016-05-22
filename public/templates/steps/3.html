@@ -1,0 +1,63 @@
+<div class="wrap" ng-controller="ObjectivesController">
+    <aside>
+        <ul>
+            <li ng-class="{ active:isSelectedTab(1) }" ng-click="selectTab(1)">Display ads</li>
+            <li ng-class="{ active:isSelectedTab(2) }" ng-click="selectTab(2)">Landing Page</li>
+            <li ng-class="{ active:isSelectedTab(3) }" ng-click="selectTab(3)">Logo</li>
+            <li ng-class="{ active:isSelectedTab(4) }" ng-click="selectTab(4)">Images</li>
+            <li ng-class="{ active:isSelectedTab(5) }" ng-click="selectTab(5)">Promotion</li>           
+        </ul>
+    </aside>
+    <div class="content">
+        <form action="">
+            <div class="form-wrap">
+                <p>We will create a set of <span>fully optimised display ads</span> for you</p>
+                <div class="col-sm-6">
+                    <img src="images/ad.png" alt="ad">
+                </div>
+                <div class="col-sm-6">
+                    <p>
+                        Your ads will include: <br>
+                            - Your logo <br>
+                            - Images that are relevent
+                              to your service or product  <br>
+                            - Offer or promotion  <br>
+                            - Your target location  <br>
+                            - Call to action
+                    </p>
+                </div>
+            </div>
+            <div class="form-wrap">
+                <div class="col-sm-6">
+                    <p>When clicked, your display ads will direct users to a <span>landing page</span> created by us. This landing page is designed to be fully optimised and will include information about your business,  promotion or offer and include contact details.</p>
+                    <p>We are able to track all activity on this page, which will be included in your <span>report</span>.</p>
+                </div>
+                <div class="col-sm-6">
+                    <img src="images/landing.png" alt="landing">
+                </div>
+            </div>
+            <div class="form-wrap">
+                <div class="col-sm-6">
+                    <p>When clicked, your display ads will direct users to a <span>landing page</span> created by us. This landing page is designed to be fully optimised and will include information about your business,  promotion or offer and include contact details.</p>
+                    <p>We are able to track all activity on this page, which will be included in your <span>report</span>.</p>
+                </div>
+                <div class="col-sm-6">
+                    <img src="images/landing.png" alt="landing">
+                </div>
+            </div>
+            <div class="form-wrap">                
+                <p>Upload your company <span>logo</span> here. Please try to upload a high resolution file, in .png format. This will help us to ensure that the quality of your ads and landing page are premium.</p>          
+                <div class="upload"></div>                
+            </div>
+            <div class="form-wrap">                
+                <p>Upload any <span>images</span> that you use on your website or on any existing promotional material here. Please try to upload a high resolution file, in .png format. This will help us to ensure that the quality of your ads and landing page are premium.</p>          
+                <div class="upload"></div>                
+            </div>
+            <div class="form-wrap">  
+                <p> Encourage users to click on your ads and sign up to your campaign with an <span>engaging promotion or offer</span>! We would reccomend offering your users a promotion relevant to your business or industry.</p>
+                <p>For example, a retailer may offer <span>20% off all products</span></p>
+                <input type="text" placeholder="Enter promotion">
+            </div>
+        </form>    
+    </div>
+</div>

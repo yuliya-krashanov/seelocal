@@ -8,7 +8,7 @@
     <div class="content">
         <div class="form-wrap" ng-repeat="objective in objectives" ng-show="isSelectedTab(objective.id)">
             <div class="image">
-                <img ng-src="{{ asset('/images/<%objective.image%>') }}" alt="<%objective.title%>"/>
+                <img ng-src="/images/<%objective.image%>" alt="<%objective.title%>"/>
             </div>
             <p class="title"><span><%objective.title%></span> | <%objective.excerpt%></p>
             <p class="desc"><%objective.description%></p>
