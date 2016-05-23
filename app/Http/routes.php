@@ -12,9 +12,8 @@
 */
 
 
-Route::auth();
+//Route::auth();
 
-//Route::get('/', function(){ return redirect('/step/1'); });
 
 //Route::get('/account',  ['middleware' => 'auth', 'uses' => 'AccountController@index']);
 
@@ -29,9 +28,9 @@ Route::auth();
 // we dont need to use Laravel Blade
 // we will return a PHP file that will hold all of our Angular content
 // see the "Where to Place Angular Files" below to see ideas on how to structure your app return
-Route::get('/', function() {
-    return view('layouts.app');
-});
+
+
+//Route::get('/step/1', function(){ return view('layouts.app'); });
 
 // API ROUTES ==================================
 Route::group(array('prefix' => 'api'), function() {
@@ -39,8 +38,16 @@ Route::group(array('prefix' => 'api'), function() {
     // since we will be using this just for CRUD, we won't need create and edit
     // Angular will handle both of those forms
     // this ensures that a user can't access api/create or api/edit when there's nothing there
-    Route::post('/objectives', 'StepsController@getObjectives');
+   Route::post('/objectives', 'StepsController@getObjectives');
 
-    Route::post('/auth/check', 'Auth\AuthController@getLogin');
+   Route::post('/auth/check', 'Auth\AuthController@check');
 
+   Route::post('/auth/login', 'Auth\AuthController@login');
+
+   Route::post('/auth/logout', 'Auth\AuthController@logout');
+
+});
+
+Route::get('/', function() {
+    return view('layouts.app');
 });

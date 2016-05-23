@@ -73,6 +73,10 @@ header {
   }
 }
 
+
+.panel {
+  box-shadow: 0 0 10px 2px #ddd;
+}
 main {
   height: auto;
   min-height: calc(100% - 97px);

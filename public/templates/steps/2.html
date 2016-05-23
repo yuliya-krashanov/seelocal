@@ -11,12 +11,12 @@
     </aside>
     <div class="content">
         <form action="">
-            <div class="form-wrap">
+            <div class="form-wrap" ng-show="isSelectedTab(1)">
                 <p>Enter the <span>name of your campaign</span> and the <span>phone number<span> you would like us to include on the landing page, which users can use to get in touch with you</p>
                 <input type="text" placeholder="Campaign Name">
                 <input type="text" placeholder="Phone Number">
             </div>
-            <div class="form-wrap">
+            <div class="form-wrap" ng-show="isSelectedTab(2)">
                 <p>Enter the target <span>locations</span> of your campaign</p>
                 <div class="location" ng-repeat="location in locations">
                     <input type="text" placeholder="Location" ng-model="location.location">
@@ -32,14 +32,14 @@
                 <div class="link" ng-click="addLocation()">Add more locations</div>
             </div>
 
-            <div class="form-wrap">
+            <div class="form-wrap" ng-show="isSelectedTab(3)">
                 <p>Enter the <span>demographics</span> of your taget audience</p>
                 <input type="text" placeholder="Age" ng-model="age">
                 <input type="text" placeholder="Gender(s)" ng-model="genders">
                 <input type="text" placeholder="Languages" ng-model="languages">                
             </div>
 
-            <div class="form-wrap">
+            <div class="form-wrap" ng-show="isSelectedTab(4)">
                 <p>What is your <span>target audience interested in</span>? Search for any words, phrases or topics that is relevant to your business/audience and add them to your campaign.</p>
                 <input type="text" placeholder="Search" ng-model="searchInterest">
                 <div class="col-sm-6">
@@ -57,19 +57,14 @@
                 <div class="link" ng-click="selectAllInterests()">Add all</div>           
             </div>
 
-            <div class="form-wrap">
-                <p>Type in any <span>keywords</span> that are relevant to your business, product or service. Try to think of any words/phrases that your target audience may be searching for.</p>
-                <input type="text" placeholder="" ng-repeat="keyword in keywords">  
-                <div class="link" ng-click="addMoreKeywords()">Add more</div>                           
-            </div>
-            
-            <div class="form-wrap">
+            <div class="form-wrap" ng-show="isSelectedTab(5)">
                 <p>Type in any <span>keywords</span> that are relevant to your business, product or service. Try to think of any words/phrases that your target audience may be searching for.</p>
                 <input type="text" placeholder="" ng-repeat="keyword in keywords">  
                 <div class="link" ng-click="addMoreKeywords()">Add more</div>                           
             </div>
 
-            <div class="form-wrap">
+
+            <div class="form-wrap" ng-show="isSelectedTab(6)">
                 <p>Type in any relevant <span>websites</span> that you would like your ads to appear on. Please note that not all of the websites may be in our network, so they will not be approved.</p>
                 <input type="text" placeholder="" ng-repeat="website in websites">  
                 <div class="link" ng-click="addMoreWebsite()">Add more</div>                           

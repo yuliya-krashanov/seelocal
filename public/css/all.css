@@ -61,6 +61,9 @@ header nav.navbar {
       padding-bottom: 27px;
       color: #252525; }
 
+.panel {
+  box-shadow: 0 0 10px 2px #ddd; }
+
 main {
   height: auto;
   min-height: calc(100% - 97px);

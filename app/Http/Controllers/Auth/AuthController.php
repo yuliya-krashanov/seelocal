@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -28,7 +30,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/step/1';
 
     /**
      * Create a new authentication controller instance.
@@ -37,7 +39,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        //$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -76,7 +78,23 @@ class AuthController extends Controller
         ]);
     }
 
+
+    public function login(Request $request){
+        $credentials = $this->getCredentials($request);
+        if (! Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            return response('These credentials do not match our records.', 403);
+        }
+        return response( Auth::user());
+    }
+
+    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
+        return response(null, 200);
+    }
+
     public function check(){
-        return Auth::check();
+
+        return Auth::check() ? 1 : 0;
     }
 }

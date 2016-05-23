@@ -16,10 +16,9 @@
     <link href="{{ elixir('css/all.css') }}" rel="stylesheet">
 
 </head>
-<body ng-app="seelocal">
+<body ng-app="seelocal" ng-controller="AuthController">
     <header>
-        @if (Auth::check())
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top" ng-show="userLogged">
             <div class="container">
                 <div class="navbar-header">
 
@@ -32,8 +31,8 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('images/logo.png') }}" alt="logo"/>
+                    <a class="navbar-brand" href="/">
+                        <img src="images/logo.png" alt="logo"/>
                     </a>
                 </div>
 
@@ -44,7 +43,8 @@
                         <!-- Authentication Links -->
 
                         <li><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
-                        <li><a href="{{ url('/account') }}">Your Account</a></li>
+                        <li><a href="/account">Your Account</a></li>
+                        <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
 
                         {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -61,12 +61,12 @@
             </div>
         </nav>
 
-        @else
-            <nav>
-                <a href="{{ url('/login') }}" class="focus">Log In</a> | <a href="{{ url('/register') }}">Register</a>
-            </nav>
 
-        @endif
+        <nav ng-hide="userLogged">
+            <a href="{{ url('/login') }}" class="focus">Log In</a> | <a href="{{ url('/register') }}">Register</a>
+        </nav>
+
+
     </header>
     <main class="container">
         <div class="row">
@@ -75,8 +75,7 @@
         </div>
     </main>
 
-    @if (Auth::check())
-    <footer>
+    <footer ng-show="userLogged">
         <div class="container">
             <div class="row">
                 <div class="pull-left copyright">&copy; <a href="http://seelocal.co.uk">SeeLocal</a></div>
@@ -88,8 +87,6 @@
             </div>
         </div>
     </footer>
-
-    @endif
 
     <!-- JavaScripts -->
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
