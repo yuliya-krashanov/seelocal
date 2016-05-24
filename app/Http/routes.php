@@ -12,9 +12,6 @@
 */
 
 
-//Route::auth();
-
-
 //Route::get('/account',  ['middleware' => 'auth', 'uses' => 'AccountController@index']);
 
 //Route::get('/step/{step}', ['middleware' => 'step', 'uses' => 'StepsController@show']);
@@ -40,7 +37,7 @@ Route::group(array('prefix' => 'api'), function() {
     // this ensures that a user can't access api/create or api/edit when there's nothing there
    Route::post('/objectives', 'StepsController@getObjectives');
 
-   Route::post('/auth/check', 'Auth\AuthController@check');
+   Route::post('/auth/register', 'Auth\AuthController@register');
 
    Route::post('/auth/login', 'Auth\AuthController@login');
 

@@ -18,7 +18,7 @@
 </head>
 <body ng-app="seelocal" ng-controller="AuthController">
     <header>
-        <nav class="navbar navbar-default navbar-static-top" ng-show="userLogged">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -42,9 +42,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
 
-                        <li><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
-                        <li><a href="/account">Your Account</a></li>
-                        <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
+                        <li ng-show="logged"><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
+                        <li ng-show="logged"><a href="/account">Your Account</a></li>
+                        <li ng-show="logged"><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
+                        <li ng-hide="logged"><a href="/login">Log In</a></li>|
+                        <li ng-hide="logged"><a href="/register">Register</a></li>
 
                         {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -61,12 +63,6 @@
             </div>
         </nav>
 
-
-        <nav ng-hide="userLogged">
-            <a href="{{ url('/login') }}" class="focus">Log In</a> | <a href="{{ url('/register') }}">Register</a>
-        </nav>
-
-
     </header>
     <main class="container">
         <div class="row">
@@ -75,7 +71,7 @@
         </div>
     </main>
 
-    <footer ng-show="userLogged">
+    <footer>
         <div class="container">
             <div class="row">
                 <div class="pull-left copyright">&copy; <a href="http://seelocal.co.uk">SeeLocal</a></div>

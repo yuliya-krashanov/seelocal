@@ -1,17 +1,37 @@
-<div class="wrap" ng-controller="ObjectivesController">
-    <aside>
-        <ul>
-            <li ng-repeat="objective in objectives" ng-class="{ active:isSelectedTab(objective.id) }"
-                ng-click="selectTab(objective.id)"><% objective.title %></li>
-        </ul>
-    </aside>
-    <div class="content">
-        <div class="form-wrap" ng-repeat="objective in objectives" ng-show="isSelectedTab(objective.id)">
-            <div class="image">
-                <img ng-src="/images/<%objective.image%>" alt="<%objective.title%>"/>
+<section class="intro">
+    <h2>Setup Your Campaign</h2>
+    <h5><span>Step <% step %></span> | <% stepsDesc[step-1] %></h5>
+</section>
+
+<section class="steps-navigation">
+    <ul>
+        <li ng-repeat="stepNum in [1,2,3,4,5]" ng-class="{active: isStepActive(stepNum), passed: isStepPassed(stepNum)}" style="left: <% leftMarginPer*(stepNum-1) %>%; z-index: <% 7 - stepNum %>">
+            <a href="/step/<% stepNum %>">Step <% stepNum %></a>
+        </li>
+    </ul>
+</section>
+
+<section class="step" ng-controller="TabsController">
+    <div class="wrap" ng-controller="ObjectivesController">
+        <aside>
+            <ul>
+                <li ng-repeat="objective in objectives" ng-class="{ active:isSelectedTab(objective.id) }"
+                    ng-click="selectTab(objective.id)"><% objective.title %></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <div class="form-wrap" ng-repeat="objective in objectives" ng-show="isSelectedTab(objective.id)">
+                <div class="image">
+                    <img ng-src="/images/<%objective.image%>" alt="<%objective.title%>"/>
+                </div>
+                <p class="title"><span><%objective.title%></span> | <%objective.excerpt%></p>
+                <p class="desc"><%objective.description%></p>
             </div>
-            <p class="title"><span><%objective.title%></span> | <%objective.excerpt%></p>
-            <p class="desc"><%objective.description%></p>
         </div>
     </div>
-</div>
+</section>
+
+<section class="buttons">
+    <div ng-hide="step == 1" class="prev pull-left"><a href="/step/<% +step-1  %>"><i class="fa fa-angle-left" aria-hidden="true"></i>Back</a></div>
+    <div ng-hide="step == 5" class="next pull-right"><a href="/step/<% +step+1   %>">Next Step<i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
+</section>

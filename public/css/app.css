@@ -164,39 +164,70 @@ section.step {
     section.step .wrap .content {
       float: right;
       width: 75%;
-      height: 100%; }
+      height: 100%;
+      overflow-y: scroll; }
       section.step .wrap .content .form-wrap {
         width: 100%;
-        height: 100%;
-        overflow-y: scroll;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex; }
-        section.step .wrap .content .form-wrap .title {
-          color: #4dc01d; }
-          section.step .wrap .content .form-wrap .title span {
-            font-family: "LatoRegular", sans-serif; }
-        section.step .wrap .content .form-wrap .desc {
-          max-width: 37%;
-          text-align: center; }
-        section.step .wrap .content .form-wrap .image {
-          margin-bottom: 25px; }
-      section.step .wrap .content ::-webkit-scrollbar {
-        width: 12px; }
-      section.step .wrap .content ::-webkit-scrollbar-track {
-        background: #fafafa; }
-      section.step .wrap .content ::-webkit-scrollbar-thumb {
-        background: #4dc01d;
-        border-radius: 3px; }
+        height: 100%; }
+        section.step .wrap .content .form-wrap.details {
+          padding-top: 65px;
+          padding-left: 100px; }
+          section.step .wrap .content .form-wrap.details .location {
+            margin-top: 20px; }
+            section.step .wrap .content .form-wrap.details .location .remove {
+              display: inline-block;
+              margin-left: 15px; }
+          section.step .wrap .content .form-wrap.details p {
+            width: 66%;
+            margin-bottom: 15px; }
+            section.step .wrap .content .form-wrap.details p span {
+              color: #4dc01d; }
+          section.step .wrap .content .form-wrap.details input, section.step .wrap .content .form-wrap.details select {
+            display: block;
+            width: 310px;
+            border: none;
+            border-bottom: 1px solid #c3c3c3;
+            margin-bottom: 20px;
+            padding-left: 3px;
+            outline: none; }
+            section.step .wrap .content .form-wrap.details input::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder {
+              color: #252525; }
+          section.step .wrap .content .form-wrap.details select {
+            display: inline-block;
+            background: none;
+            padding-left: 0px; }
+          section.step .wrap .content .form-wrap.details .link {
+            cursor: pointer;
+            color: #4dc01d; }
+        section.step .wrap .content .form-wrap.objective {
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex; }
+          section.step .wrap .content .form-wrap.objective .title {
+            color: #4dc01d; }
+            section.step .wrap .content .form-wrap.objective .title span {
+              font-family: "LatoRegular", sans-serif; }
+          section.step .wrap .content .form-wrap.objective .desc {
+            max-width: 37%;
+            text-align: center; }
+          section.step .wrap .content .form-wrap.objective .image {
+            margin-bottom: 25px; }
+    section.step .wrap *::-webkit-scrollbar {
+      width: 10px; }
+    section.step .wrap *::-webkit-scrollbar-track {
+      background: #fafafa; }
+    section.step .wrap *::-webkit-scrollbar-thumb {
+      background: #4dc01d;
+      border-radius: 5px; }
 
 section.buttons {
   margin-top: 30px; }

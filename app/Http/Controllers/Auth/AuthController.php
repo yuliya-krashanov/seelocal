@@ -93,8 +93,17 @@ class AuthController extends Controller
         return response(null, 200);
     }
 
-    public function check(){
+    public function register(Request $request){
+      /*  $validator = $this->validator($request->all());
 
-        return Auth::check() ? 1 : 0;
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }*/
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        return response( Auth::user());
     }
 }

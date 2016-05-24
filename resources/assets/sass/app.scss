@@ -11,6 +11,7 @@ $grey: #424040;
 $black: #252525;
 $lightGrey: #fafafa;
 $borderGrey: #f6f6f6;
+$borderInput: #c3c3c3;
 $footerBack: #464a4a;
 
 //heights
@@ -180,36 +181,77 @@ section.step {
       float: right;
       width: 75%;
       height: 100%;
+      overflow-y: scroll;
       .form-wrap {
         width: 100%;
         height: 100%;
-        overflow-y: scroll;
-        @include flex(center, center, column);
-        .title {
-          color: $green;
-          span {
-            font-family: $latoRegular;
+        &.details{
+          padding-top: 65px;
+          padding-left: 100px;
+          .location{
+            margin-top: 20px;
+            .remove{
+              display: inline-block;
+              margin-left: 15px;
+            }
+          }
+          p{
+            width: 66%;
+            margin-bottom: 15px;
+            span{
+              color: $green;
+            }
+          }
+          input, select{
+            display: block;
+            width: 310px;
+            border: none;
+            border-bottom: 1px solid $borderInput;
+            margin-bottom: 20px;
+            padding-left: 3px;
+            outline: none;
+            &::-webkit-input-placeholder, &::-moz-placeholder{
+              color: $black;
+            }
+          }
+          select{
+            display: inline-block;
+            background: none;
+            padding-left: 0px;
+          }
+          .link{
+            cursor: pointer;
+            color: $green;
           }
         }
-        .desc {
-          max-width: 37%;
-          text-align: center;
+        &.objective{
+          @include flex(center, center, column);
+          .title {
+            color: $green;
+            span {
+              font-family: $latoRegular;
+            }
+          }
+          .desc {
+            max-width: 37%;
+            text-align: center;
+          }
+          .image {
+            margin-bottom: 25px;
+          }
         }
-        .image {
-          margin-bottom: 25px;
-        }
       }
-      ::-webkit-scrollbar {
-        width: 12px;
-      }
-      ::-webkit-scrollbar-track {
-        background: $lightGrey;
-      }
+    }
+    *::-webkit-scrollbar {
+      width: 10px;
+    }
+    *::-webkit-scrollbar-track {
+      background: $lightGrey;
+    }
 
-      ::-webkit-scrollbar-thumb {
-        background: $green;
-        border-radius: 3px;
-      }
+    *::-webkit-scrollbar-thumb {
+      background: $green;
+      border-radius: 5px;
     }
   }
 }

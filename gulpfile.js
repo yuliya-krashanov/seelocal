@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 
 gulp.task("copyfiles", function() {
-    gulp.src("bower_components/ngstorage/ngStorage.min.js")
+    gulp.src("bower_components/angular-local-storage/dist/angular-local-storage.min.js")
         .pipe(gulp.dest("public/js/"));
 });
 
@@ -29,7 +29,7 @@ elixir(function(mix) {
     mix.scripts([
         'angular.min.js',
         'angular-route.min.js',
-        'ngStorage.min.js',
+        'angular-local-storage.min.js',
         'jquery.min.js',
         'bootstrap.min.js',
         'app.js',
