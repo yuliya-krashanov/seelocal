@@ -56,6 +56,8 @@ ul {
   padding: 0;
 }
 
+
+
 header {
   nav.navbar {
     min-height: 77px;
@@ -140,8 +142,8 @@ section.step {
   border: 2px solid $borderGrey;
   width: 100%;
   border-radius: 5px;
-  min-height: 415px;
-  height: 415px;
+  min-height: 424px;
+  height: 424px;
   position: relative;
   .wrap {
     width: 100%;
@@ -185,6 +187,9 @@ section.step {
       .form-wrap {
         width: 100%;
         height: 100%;
+        div.col-sm-6{
+          padding: 0 30px 0 0;
+        }
         &.details{
           padding-top: 65px;
           padding-left: 100px;
@@ -195,12 +200,82 @@ section.step {
               margin-left: 15px;
             }
           }
+          .wrap-interests{
+            width: 540px;
+            float: left;
+            .interests{
+              height: 120px;
+              overflow-y: scroll;
+              list-style-type: none;
+              border: 1px solid $borderGrey;
+              border-radius: 3px;
+              li{
+                padding: 6px;
+                span{
+                  float: right;
+                  cursor: pointer;
+                  i{
+                    color: $green;
+                    font-size: 19px;
+                    position: relative;
+                    left: -5px;
+                    top: 1px;
+                  }
+                }
+              }
+              &.selected{
+                background-color: $borderGrey;
+                li i{
+                  color: $borderInput;
+                }
+              }
+            }
+            .link{
+              clear: both;
+            }
+          }
+          .wrap-display{
+            float: left;
+            width: 600px;
+            margin-top: 25px;
+            p{
+              width: 100%;
+              margin-top: 15px;
+              line-height: 30px;
+            }
+          }
+          .wrap-landing{
+            float: left;
+            width: 90%;
+          }
+          .upload{
+            margin-top: 30px;
+            .drop{
+              width: 255px;
+              height: 170px;
+              background-color: #f1f0f0;
+              @include flex(center, center);
+              span{
+                width: 100px;
+                height: 80px;
+                background-color: #dddadc;
+                cursor: pointer;
+                @include flex(center, center);
+                i{
+                  font-size: 30px;
+                  color: $lightGrey;
+                }
+              }
+            }
+          }
           p{
-            width: 66%;
             margin-bottom: 15px;
             span{
               color: $green;
             }
+          }
+          & > p{
+            width: 66%;
           }
           input, select{
             display: block;

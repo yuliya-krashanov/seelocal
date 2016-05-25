@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Campaign_Interest;
 use App\Campaign_Objective;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,10 @@ class StepsController extends Controller
      */
     public function getObjectives(Request $request){
        return Campaign_Objective::all()->toJson();
+    }
+
+    public function getInterests(Request $request){
+        return Campaign_Interest::all()->toJson();
     }
 
     /**

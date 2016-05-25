@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 
 gulp.task("copyfiles", function() {
-    gulp.src("bower_components/angular-local-storage/dist/angular-local-storage.min.js")
+    gulp.src("bower_components/ng-flow/dist/ng-flow-standalone.min.js")
         .pipe(gulp.dest("public/js/"));
 });
 
@@ -30,6 +30,7 @@ elixir(function(mix) {
         'angular.min.js',
         'angular-route.min.js',
         'angular-local-storage.min.js',
+        'ng-flow-standalone.min.js',
         'jquery.min.js',
         'bootstrap.min.js',
         'app.js',

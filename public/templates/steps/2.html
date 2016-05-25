@@ -1,15 +1,4 @@
-<section class="intro">
-    <h2>Setup Your Campaign</h2>
-    <h5><span>Step <% step %></span> | <% stepsDesc[step-1] %></h5>
-</section>
-
-<section class="steps-navigation">
-    <ul>
-        <li ng-repeat="stepNum in [1,2,3,4,5]" ng-class="{active: isStepActive(stepNum), passed: isStepPassed(stepNum)}" style="left: <% leftMarginPer*(stepNum-1) %>%; z-index: <% 7 - stepNum %>">
-            <a href="/step/<% stepNum %>">Step <% stepNum %></a>
-        </li>
-    </ul>
-</section>
+<navigation-top></navigation-top>
 
 <section class="step" ng-controller="TabsController">
     <div class="wrap" ng-controller="DemographicsController">
@@ -57,39 +46,37 @@
                 <div class="form-wrap details" ng-show="isSelectedTab(4)">
                     <p>What is your <span>target audience interested in</span>? Search for any words, phrases or topics that is relevant to your business/audience and add them to your campaign.</p>
                     <input type="text" placeholder="Search" ng-model="searchInterest">
-                    <div class="col-sm-6">
-                        <p>Select to add</p>
-                        <ul>
-                            <li ng-repeat="interest in interests | filter: searchInterest"><% interest.title %><span ng-click="selectInterest(interest.id)"></span></li>
-                        </ul>
+                    <div class="wrap-interests">
+                        <div class="col-sm-6">
+                            <p>Select to add</p>
+                            <ul class="interests">
+                                <li ng-repeat="(key, interest) in interests | filter: searchInterest"><% interest.name %><span ng-click="selectInterest(key)"><i class="fa fa-plus-circle"></i></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>Selected Interests</p>
+                            <ul class="interests selected">
+                                <li ng-repeat="(key, interest) in selectedInterests"><% interest.name %><span ng-click="unselectInterest(key)"><i class="fa fa-minus-circle"></i></span></li>
+                            </ul>
+                        </div>
+                        <div class="link" ng-click="selectAllInterests()">Add all</div>
                     </div>
-                    <div class="col-sm-6">
-                        <p>Selected Interests</p>
-                        <ul>
-                            <li ng-repeat="interest in selectedInterests"><% interest.title %><span ng-click="unselectInterest(interest.id)"></span></li>
-                        </ul>
-                    </div>
-                    <div class="link" ng-click="selectAllInterests()">Add all</div>
                 </div>
 
                 <div class="form-wrap details" ng-show="isSelectedTab(5)">
                     <p>Type in any <span>keywords</span> that are relevant to your business, product or service. Try to think of any words/phrases that your target audience may be searching for.</p>
-                    <input type="text" placeholder="" ng-repeat="keyword in keywords">
-                    <div class="link" ng-click="addMoreKeywords()">Add more</div>
+                    <input type="text" placeholder="Keyword" ng-repeat="keyword in keywords" ng-model="keyword.name">
+                    <div class="link" ng-click="addKeyword()">Add more</div>
                 </div>
 
 
                 <div class="form-wrap details" ng-show="isSelectedTab(6)">
                     <p>Type in any relevant <span>websites</span> that you would like your ads to appear on. Please note that not all of the websites may be in our network, so they will not be approved.</p>
-                    <input type="text" placeholder="" ng-repeat="website in websites">
-                    <div class="link" ng-click="addMoreWebsite()">Add more</div>
+                    <input type="text" placeholder="Website URL" ng-repeat="website in websites" ng-model="website.name">
+                    <div class="link" ng-click="addWebsite()">Add more</div>
                 </div>
             </form>
         </div>
     </div>
 </section>
-
-<section class="buttons">
-    <div ng-hide="step == 1" class="prev pull-left"><a href="/step/<% +step-1  %>"><i class="fa fa-angle-left" aria-hidden="true"></i>Back</a></div>
-    <div ng-hide="step == 5" class="next pull-right"><a href="/step/<% +step+1   %>">Next Step<i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
-</section>
+<navigation-bottom></navigation-bottom>

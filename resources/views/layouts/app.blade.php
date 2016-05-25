@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="seelocal">
 <head>
     <meta charset="utf-8">
     <base href="/"/>
@@ -16,7 +16,7 @@
     <link href="{{ elixir('css/all.css') }}" rel="stylesheet">
 
 </head>
-<body ng-app="seelocal" ng-controller="AuthController">
+<body flow-prevent-drop ng-controller="AuthController">
     <header>
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">

@@ -37,9 +37,13 @@ Route::group(array('prefix' => 'api'), function() {
     // this ensures that a user can't access api/create or api/edit when there's nothing there
    Route::post('/objectives', 'StepsController@getObjectives');
 
+   Route::post('/interests', 'StepsController@getInterests');
+
    Route::post('/auth/register', 'Auth\AuthController@register');
 
    Route::post('/auth/login', 'Auth\AuthController@login');
+
+   Route::post('/auth/check', 'Auth\AuthController@check');
 
    Route::post('/auth/logout', 'Auth\AuthController@logout');
 

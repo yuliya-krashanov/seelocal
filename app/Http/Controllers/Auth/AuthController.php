@@ -78,6 +78,9 @@ class AuthController extends Controller
         ]);
     }
 
+    public function check(){
+        return Auth::check() ? Auth::user() : 0;
+    }
 
     public function login(Request $request){
         $credentials = $this->getCredentials($request);

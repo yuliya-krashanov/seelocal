@@ -1,9 +1,9 @@
 (function(){
-    angular.module('seelocal', ['ngRoute', 'LocalStorageModule'], function($interpolateProvider) {
+    angular.module('seelocal', ['ngRoute', 'LocalStorageModule', 'flow'], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     })
-    .config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, localStorageServiceProvider){
+    .config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', 'flowFactoryProvider', function($routeProvider, $locationProvider, localStorageServiceProvider, flowFactoryProvider){
             $locationProvider.html5Mode(true);
 
             $routeProvider
@@ -38,6 +38,17 @@
             localStorageServiceProvider
                 .setPrefix('seelocal');
 
+            flowFactoryProvider.defaults = {
+              target: 'images/temp'
+            };
+
+    }])
+
+    .run(['AuthService', '$rootScope', '$templateCache', function(AuthService, $rootScope, $templateCache){
+        AuthService.checkServerLogin();
+        $rootScope.$on('$viewContentLoaded', function() {
+            $templateCache.removeAll();
+        });
     }])
     .controller('AuthController', ['$scope', '$location', 'AuthService', 'localStorageService', function($scope, $location, AuthService, localStorageService){
             $scope.logged = AuthService.checkUserLoggedIn();
@@ -84,8 +95,9 @@
             'choose your budget and timescale',
             'review and pay'
         ];
+
         $scope.isStepPassed = function(step){
-          return step < $scope.step;
+          return localStorageService.get('step_' + step + '_passed') ? true : false;
         };
         $scope.isStepActive = function(step){
             return step == $scope.step;
@@ -106,12 +118,18 @@
             return $scope.selectedTab === id;
         };
     }])
-    /*.directive('stepContent', ['$route', function($route){
+    .directive('navigationTop', ['$route', function($route){
             return {
               restrict: 'E',
-              templateUrl:'templates/steps/' + $route.current.params.step + '.html'
+              templateUrl:'templates/steps/navigation-top.html'
             };
-        }])*/
+        }])
+    .directive('navigationBottom', ['$route', function($route){
+        return {
+            restrict: 'E',
+            templateUrl:'templates/steps/navigation-bottom.html'
+        };
+    }])
     .controller('ObjectivesController', ['$scope', '$http', 'SharedProperties', 'localStorageService', function($scope, $http, SharedProperties, localStorageService){
         $scope.objectives = [];
 
@@ -121,22 +139,61 @@
             console.log(error);
         });
     }])
+    .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
 
+    }])
     .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         $scope.locations = localStorageService.get('campaign_locations') || [{}];
-        $scope.selectedInterests = localStorageService.get('campaign_interests') || [{}];
+        $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
         $scope.interests = [];
+        $scope.keywords = localStorageService.get('campaign_keywords') || [{},{},{},{}];
+        $scope.websites = localStorageService.get('campaign_websites') || [{},{},{},{}];
+        var keywordsLength = $scope.keywords.length;
+        var websitesLength = $scope.websites.length;
 
-        $http.post('api/interests').success(function(responce){  $scope.interests = responce; }).error();
+        if(keywordsLength < 4) {
+            for (var i = 4 - keywordsLength; i > 0; i--) {
+                $scope.keywords.push({});
+            }
+        }
+        if(websitesLength < 4) {
+            for (var i = 4 - websitesLength; i > 0; i--) {
+                $scope.websites.push({});
+            }
+        }
+        $scope.addKeyword = function(){
+            $scope.keywords.push({});
+        };
+        $scope.addWebsite = function(){
+            $scope.websites.push({});
+        };
+
+        $http.post('api/interests').success(function(responce){  $scope.interests = responce; }).error(function(error){
+            console.log(error);
+        });
+
+        $scope.selectInterest = function(key){
+            $scope.selectedInterests.push( $scope.interests[key] );
+            $scope.interests.splice(key, 1);
+        };
+        $scope.unselectInterest = function(key){
+            $scope.interests.push( $scope.selectedInterests[key] );
+            $scope.selectedInterests.splice(key, 1);
+        };
+
+        $scope.selectAllInterests = function(){
+            $scope.interests.forEach(function(item){
+                $scope.selectedInterests.push( item );
+            });
+            $scope.interests.splice(0);
+        };
 
         $scope.addLocation = function(){
           $scope.locations.push({});
         };
 
         $scope.removeLocation = function(key){
-            console.log($scope.locations);
             $scope.locations.splice(key, 1);
-
         };
     }])
     .service('SharedProperties', function(){
@@ -172,15 +229,26 @@
             }
         }])
     .factory('AuthService', ['$http', 'localStorageService', function($http, localStorageService){
+
         return {
+            checkServerLogin: function(){
+                $http.post('api/auth/check').success(function(data){
+                    if (data.remember_token)
+                        localStorageService.set('token', data.remember_token);
+                    else
+                        localStorageService.remove('token');
+
+                }).error(function(error){
+                    console.log(error);
+                });
+            },
             checkUserLoggedIn: function(){
-                return (localStorageService.get('token')) ? true: false;
+                return localStorageService.get('token') ? true : false;
             },
             login: function(user, success){
                 return $http.post('api/auth/login', user).success(function(responce){
                     localStorageService.set('token', responce.remember_token);
                     success(responce);
-                    console.log(responce);
                 }).error(function(error){
                     console.log(error);
                 });
