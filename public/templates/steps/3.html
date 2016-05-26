@@ -54,9 +54,28 @@
                         format. This will help us to ensure that the quality of your ads and landing page are premium.
                     </p>
 
-                    <div class="upload" flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
-                        <div class="drop" flow-drop>
+                    <div class="upload" flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-files-submitted="$flow.upload()">
+                        <div class="drop" flow-drop ng-show="!$flow.files.length">
                             <span flow-btn><i class="fa fa-plus-circle"></i></span>
+                        </div>
+                        <div class="thumb-wrap" ng-show="$flow.files.length" >
+                            <div class="thumb col-sm-4">
+                                <p class="thumb-name"><% $flow.files[0].name %></p>
+                                <div class="thumbnail">
+                                    <img flow-img="$flow.files[0]" />
+                                </div>
+                                <div class="progress progress-striped" ng-class="{active: $flow.files[0].isUploading()}">
+                                    <div class="progress-bar" role="progressbar" ng-style="{width: ($flow.files[0].progress() * 100) + '%'}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100">
+                                        <span class="sr-only"><% $flow.files[0].progress() * 100 %>% Complete</span>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <span class="btn btn-info" flow-btn>Change</span>
+                                    <a class="btn btn-danger" ng-click="$flow.files[0].cancel()">
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,18 +84,37 @@
                         material here. Please try to upload a high resolution file, in .png format. This will help us to
                         ensure that the quality of your ads and landing page are premium.</p>
 
-                    <div class="upload" flow-init flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
-                        <div class="drop" flow-drop>
+                    <div class="upload" flow-init flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-files-submitted="$flow.upload()">
+                        <div class="drop" flow-drop ng-show="!$flow.files.length">
                             <span flow-btn><i class="fa fa-plus-circle"></i></span>
+                        </div>
+                        <span class="btn btn-success" ng-show="$flow.files.length" flow-btn>Add more</span>
+                        <div class="thumb-wrap" ng-show="$flow.files.length">
+                            <div class="thumb col-sm-3" ng-repeat="file in $flow.files">
+                                <p class="thumb-name"><% file.name | excerptLimitTo: 17 %></p>
+                                <div class="thumbnail">
+                                    <img flow-img="file" />
+                                </div>
+                                <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+                                    <div class="progress-bar" role="progressbar" ng-style="{width: (file.progress() * 100) + '%'}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100">
+                                        <span class="sr-only"><% file.progress() * 100 %>% Complete</span>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-xs btn-danger" ng-click="file.cancel()">
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-wrap details" ng-show="isSelectedTab(5)">
+                <div class="form-wrap details promotion" ng-show="isSelectedTab(5)">
                     <p> Encourage users to click on your ads and sign up to your campaign with an <span>engaging promotion or offer</span>!
                         We would reccomend offering your users a promotion relevant to your business or industry.</p>
 
                     <p>For example, a retailer may offer <span>20% off all products</span></p>
-                    <input type="text" placeholder="Enter promotion">
+                    <textarea placeholder="Enter promotion" ng-model="promotion"></textarea>
                 </div>
             </form>
         </div>

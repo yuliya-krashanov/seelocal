@@ -1,21 +1,28 @@
-<div class="wrap">
-	<h3 class="title-wrap">How long do you want to run your campaign for?</h3>
-	<div class="choose-period">
-		<ul>
-			<li ng-repeat="period in periods" ng-click="choosePeriod(period.id)"><% period.name %></li>
-		</ul>
-	</div>
-	<div class="show-dates">Select dates to run campaign <i class="fa" ng-class={fa-down: showDatesFields}></i></div>
-	<div class="choose-dates" ng-show="showDatesFields">
-		<input type="date" ng-model="start-date">
-		<input type="date" ng-model="end-date">
-	</div>
-</div>
+<navigation-top></navigation-top>
+<section class="date-step" ng-controller="TabsController">
+    <div class="wrap" ng-controller="DatesController">
+        <h3 class="title-wrap">How long do you want to run your campaign for?</h3>
 
-<div class="wrap">
-	<h3 class="title-wrap">How much do you want to spend?</h3>
-	<table>
-		<thead></thead>
-		<tbody></tbody>
-	</table>
-</div>
+        <div class="choose-period">
+            <ul>
+                <li ng-repeat="period in periods" ng-click="setPeriod($index)" ng-class="{active: isSelectedPeriod($index)}"><% period %></li>
+            </ul>
+        </div>
+        <div class="show-dates" ng-click="changeDatesFields()">Select dates to run campaign <i class="fa" ng-class="{'fa-angle-down': !showedDatesFields,'fa-angle-up': showedDatesFields }"></i>
+        </div>
+        <div class="choose-dates" ng-show="showedDatesFields">
+            <input type="date" ng-model="startDate">
+            <input type="date" ng-model="endDate">
+        </div>
+    </div>
+
+    <div class="wrap">
+        <h3 class="title-wrap">How much do you want to spend?</h3>
+        <table>
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</section>
+<navigation-bottom></navigation-bottom>

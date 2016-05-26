@@ -267,6 +267,33 @@ section.step {
                 }
               }
             }
+            .thumb-wrap {
+              display: block;
+              margin-top: 20px;
+              .thumb {
+                padding: 0 15px 0 0;
+                min-height: 200px;
+                margin-bottom: 15px;
+                .thumb-name {
+                  font-size: $littleFontSize;
+                }
+                .thumbnail{
+                  height: 160px;
+                  width: 95%;
+                  margin: 15px auto;
+                  overflow: hidden;
+                }
+                .progress {
+                  margin-bottom: 0;
+                  .progress-bar {
+
+                  }
+                }
+                .btn-group{
+                  margin-top: 10px;
+                }
+              }
+            }
           }
           p{
             margin-bottom: 15px;
@@ -277,7 +304,7 @@ section.step {
           & > p{
             width: 66%;
           }
-          input, select{
+          input, select, textarea{
             display: block;
             width: 310px;
             border: none;
@@ -297,6 +324,17 @@ section.step {
           .link{
             cursor: pointer;
             color: $green;
+          }
+          &.promotion{
+            padding-left: 185px;
+            textarea{
+              width: 470px;
+              font-size: $littleFontSize;
+              resize: none;
+              overflow: hidden;
+              line-height: 25px;
+              height: 55px;
+            }
           }
         }
         &.objective{
@@ -327,6 +365,52 @@ section.step {
     *::-webkit-scrollbar-thumb {
       background: $green;
       border-radius: 5px;
+    }
+  }
+}
+
+section.date-step{
+  position: relative;
+  width: 100%;
+  .wrap{
+    .title-wrap{
+      font-size: $mainFontSize;
+      background-color: $lightGrey;
+      height: 60px;
+      padding-left: 25px;
+      @include flex(center, flex-start);
+    }
+    .choose-period{
+      ul{
+        width: 100%;
+        height: 125px;
+        @include flex(center, space-around, null, yes);
+        li{
+          display: inline-block;
+          @include flex(center, center);
+          background-color: $lightGrey;
+          width: 185px;
+          height: 45px;
+          border-radius: 25px;
+          cursor: pointer;
+          &.active{
+            background-color: $green;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .show-dates{
+      text-align: center;
+      cursor: pointer;
+      i{
+        color: $green;
+        font-size: 30px;
+        margin-top: 5px;
+        position: relative;
+        top: 5px;
+        left: 7px;
+      }
     }
   }
 }

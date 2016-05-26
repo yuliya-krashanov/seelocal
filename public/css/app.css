@@ -254,13 +254,31 @@ section.step {
                 section.step .wrap .content .form-wrap.details .upload .drop span i {
                   font-size: 30px;
                   color: #fafafa; }
+            section.step .wrap .content .form-wrap.details .upload .thumb-wrap {
+              display: block;
+              margin-top: 20px; }
+              section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb {
+                padding: 0 15px 0 0;
+                min-height: 200px;
+                margin-bottom: 15px; }
+                section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb .thumb-name {
+                  font-size: 16px; }
+                section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb .thumbnail {
+                  height: 160px;
+                  width: 95%;
+                  margin: 15px auto;
+                  overflow: hidden; }
+                section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb .progress {
+                  margin-bottom: 0; }
+                section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb .btn-group {
+                  margin-top: 10px; }
           section.step .wrap .content .form-wrap.details p {
             margin-bottom: 15px; }
             section.step .wrap .content .form-wrap.details p span {
               color: #4dc01d; }
           section.step .wrap .content .form-wrap.details > p {
             width: 66%; }
-          section.step .wrap .content .form-wrap.details input, section.step .wrap .content .form-wrap.details select {
+          section.step .wrap .content .form-wrap.details input, section.step .wrap .content .form-wrap.details select, section.step .wrap .content .form-wrap.details textarea {
             display: block;
             width: 310px;
             border: none;
@@ -268,7 +286,7 @@ section.step {
             margin-bottom: 20px;
             padding-left: 3px;
             outline: none; }
-            section.step .wrap .content .form-wrap.details input::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder {
+            section.step .wrap .content .form-wrap.details input::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder, section.step .wrap .content .form-wrap.details textarea::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details textarea::-moz-placeholder {
               color: #252525; }
           section.step .wrap .content .form-wrap.details select {
             display: inline-block;
@@ -277,6 +295,15 @@ section.step {
           section.step .wrap .content .form-wrap.details .link {
             cursor: pointer;
             color: #4dc01d; }
+          section.step .wrap .content .form-wrap.details.promotion {
+            padding-left: 185px; }
+            section.step .wrap .content .form-wrap.details.promotion textarea {
+              width: 470px;
+              font-size: 16px;
+              resize: none;
+              overflow: hidden;
+              line-height: 25px;
+              height: 55px; }
         section.step .wrap .content .form-wrap.objective {
           -webkit-align-items: center;
           -ms-flex-align: center;
@@ -306,6 +333,71 @@ section.step {
     section.step .wrap *::-webkit-scrollbar-thumb {
       background: #4dc01d;
       border-radius: 5px; }
+
+section.date-step {
+  position: relative;
+  width: 100%; }
+  section.date-step .wrap .title-wrap {
+    font-size: 18px;
+    background-color: #fafafa;
+    height: 60px;
+    padding-left: 25px;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+  section.date-step .wrap .choose-period ul {
+    width: 100%;
+    height: 125px;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
+    section.date-step .wrap .choose-period ul li {
+      display: inline-block;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      background-color: #fafafa;
+      width: 185px;
+      height: 45px;
+      border-radius: 25px;
+      cursor: pointer; }
+      section.date-step .wrap .choose-period ul li.active {
+        background-color: #4dc01d;
+        color: #fff; }
+  section.date-step .wrap .show-dates {
+    text-align: center;
+    cursor: pointer; }
+    section.date-step .wrap .show-dates i {
+      color: #4dc01d;
+      font-size: 30px;
+      margin-top: 5px;
+      position: relative;
+      top: 5px;
+      left: 7px; }
 
 section.buttons {
   margin-top: 30px; }

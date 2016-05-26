@@ -39,7 +39,7 @@
                 .setPrefix('seelocal');
 
             flowFactoryProvider.defaults = {
-              target: 'images/temp'
+              target: '../images/temp'
             };
 
     }])
@@ -49,6 +49,7 @@
         $rootScope.$on('$viewContentLoaded', function() {
             $templateCache.removeAll();
         });
+
     }])
     .controller('AuthController', ['$scope', '$location', 'AuthService', 'localStorageService', function($scope, $location, AuthService, localStorageService){
             $scope.logged = AuthService.checkUserLoggedIn();
@@ -140,8 +141,63 @@
         });
     }])
     .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+        angular.element(document).ready(function () {
+            autosize(jQuery('textarea'));
+        });
+    }])
+    .controller('DatesController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+        $scope.periods = [ '2 Weeks', '1 Month', '3 Months' ];
+
+        $scope.selectedPeriod = localStorageService.get('campaign_period') || 0;
+
+        $scope.showedDatesFields = false;
+
+        var startDate = localStorageService.get('campaign_start_date') || null;
+
+        if (startDate == null){
+            $scope.startDate = new Date();
+            $scope.startDate.setDate($scope.startDate.getDate() + 7);
+        }else{
+            $scope.startDate = new Date(localStorageService.get('campaign_start_date'));
+        }
+
+        $scope.changeDatesFields = function(){
+            console.log($scope.showedDatesFields);
+            $scope.showedDatesFields = ($scope.showedDatesFields) ? false: true;
+            console.log($scope.showedDatesFields);
+        };
+
+        $scope.setPeriod = function(key){
+            $scope.selectedPeriod = key;
+            $scope.setEndDate();
+        };
+        $scope.isSelectedPeriod = function(key){
+            return $scope.selectedPeriod === key;
+        };
+
+        $scope.setEndDate = function(){
+            $scope.endDate = new Date($scope.startDate);
+            switch( $scope.selectedPeriod ){
+                case 0: $scope.endDate.setDate($scope.startDate.getDate() + 14);
+                    break;
+                case 1: $scope.endDate.setMonth($scope.startDate.getMonth() + 1);
+                    break;
+                case 2: $scope.endDate.setMonth($scope.startDate.getMonth() + 3);
+                    break;
+                default: $scope.endDate = new Date();
+                    break;
+            }
+        };
+
+        $scope.setEndDate();
 
     }])
+    .filter('excerptLimitTo', function(){
+            return function(input, limit){
+                if (input.length <= limit) return input;
+                return input.slice(0, limit) + '...';
+            }
+    })
     .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         $scope.locations = localStorageService.get('campaign_locations') || [{}];
         $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
