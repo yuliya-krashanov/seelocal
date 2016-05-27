@@ -47,6 +47,7 @@
     .run(['AuthService', '$rootScope', '$templateCache', function(AuthService, $rootScope, $templateCache){
         AuthService.checkServerLogin();
         $rootScope.$on('$viewContentLoaded', function() {
+            console.log($templateCache);
             $templateCache.removeAll();
         });
 
@@ -110,7 +111,7 @@
     }])
     .controller('TabsController', ['$scope', 'TabsService', function($scope, TabsService){
         $scope.selectedTab = TabsService.getSelectedTab();
-            console.log($scope.selectedTab);
+
         $scope.selectTab = function(id){
             $scope.selectedTab = id;
         };
@@ -162,9 +163,7 @@
         }
 
         $scope.changeDatesFields = function(){
-            console.log($scope.showedDatesFields);
             $scope.showedDatesFields = ($scope.showedDatesFields) ? false: true;
-            console.log($scope.showedDatesFields);
         };
 
         $scope.setPeriod = function(key){
@@ -176,6 +175,7 @@
         };
 
         $scope.setEndDate = function(){
+            if (!$scope.startDate) { $scope.endDate = null; return; }
             $scope.endDate = new Date($scope.startDate);
             switch( $scope.selectedPeriod ){
                 case 0: $scope.endDate.setDate($scope.startDate.getDate() + 14);
@@ -189,9 +189,44 @@
             }
         };
 
+        $scope.setStartDate = function(){
+            if (!$scope.endDate) { $scope.startDate = null; return; }
+            $scope.startDate = new Date($scope.endDate);
+            switch( $scope.selectedPeriod ){
+                case 0: $scope.startDate.setDate($scope.endDate.getDate() - 14);
+                    break;
+                case 1: $scope.startDate.setMonth($scope.endDate.getMonth() - 1);
+                    break;
+                case 2: $scope.startDate.setMonth($scope.endDate.getMonth() - 3);
+                    break;
+                default: $scope.startDate = new Date();
+                    break;
+            }
+        };
+
         $scope.setEndDate();
 
+        $http.post('api/plans').success(function(responce){
+            $scope.plans = responce;
+            console.log($scope.plans);
+        }).error(function(error){
+            console.log(error);
+        });
+
+        $scope.selectedPlan = localStorageService.get('campaign_plan') || false;
+
+        $scope.selectPlan = function(name){
+            $scope.selectedPlan = name;
+        };
+        $scope.isSelectedPlan = function(name){
+            return $scope.selectedPlan == name;
+        }
     }])
+
+    .controller('OverviewController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+
+    }])
+
     .filter('excerptLimitTo', function(){
             return function(input, limit){
                 if (input.length <= limit) return input;

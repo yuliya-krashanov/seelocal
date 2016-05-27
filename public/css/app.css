@@ -390,7 +390,8 @@ section.date-step {
         color: #fff; }
   section.date-step .wrap .show-dates {
     text-align: center;
-    cursor: pointer; }
+    cursor: pointer;
+    margin-bottom: 40px; }
     section.date-step .wrap .show-dates i {
       color: #4dc01d;
       font-size: 30px;
@@ -398,9 +399,53 @@ section.date-step {
       position: relative;
       top: 5px;
       left: 7px; }
+  section.date-step .wrap .choose-dates {
+    margin: 60px auto;
+    text-align: center; }
+    section.date-step .wrap .choose-dates input {
+      border-radius: 5px;
+      margin: 0 5px; }
+  section.date-step .wrap div.table-responsive table {
+    max-width: 840px;
+    margin: 40px auto; }
+    section.date-step .wrap div.table-responsive table thead {
+      background-color: #424040;
+      color: #fff; }
+      section.date-step .wrap div.table-responsive table thead th {
+        text-align: center;
+        font-size: 23px; }
+    section.date-step .wrap div.table-responsive table tbody td {
+      color: #4dc01d;
+      text-align: center;
+      height: 35px;
+      font-weight: 600; }
+      section.date-step .wrap div.table-responsive table tbody td:first-child {
+        color: #252525;
+        text-align: left;
+        font-size: 15px; }
+    section.date-step .wrap div.table-responsive table tbody .buttons td {
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      background-color: #424040; }
+      section.date-step .wrap div.table-responsive table tbody .buttons td:first-child {
+        background: none;
+        cursor: default; }
+      section.date-step .wrap div.table-responsive table tbody .buttons td.active {
+        background-color: #4dc01d; }
+    section.date-step .wrap div.table-responsive table td {
+      border: 3px solid #fff;
+      border-width: 2px 3px;
+      width: 17%; }
+      section.date-step .wrap div.table-responsive table td:first-child {
+        font-size: 16px;
+        width: auto; }
 
 section.buttons {
-  margin-top: 30px; }
+  margin-top: 30px;
+  float: left;
+  width: 100%;
+  margin-bottom: 45px; }
   section.buttons .next i {
     margin-left: 13px; }
   section.buttons .prev i {

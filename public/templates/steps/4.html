@@ -1,6 +1,6 @@
 <navigation-top></navigation-top>
-<section class="date-step" ng-controller="TabsController">
-    <div class="wrap" ng-controller="DatesController">
+<section class="date-step" ng-controller="DatesController">
+    <div class="wrap">
         <h3 class="title-wrap">How long do you want to run your campaign for?</h3>
 
         <div class="choose-period">
@@ -11,17 +11,49 @@
         <div class="show-dates" ng-click="changeDatesFields()">Select dates to run campaign <i class="fa" ng-class="{'fa-angle-down': !showedDatesFields,'fa-angle-up': showedDatesFields }"></i>
         </div>
         <div class="choose-dates" ng-show="showedDatesFields">
-            <input type="date" ng-model="startDate">
-            <input type="date" ng-model="endDate">
+            <input type="date" ng-change="setEndDate()" ng-model="startDate">
+            <input type="date" ng-change="setStartDate()" ng-model="endDate">
         </div>
     </div>
 
     <div class="wrap">
         <h3 class="title-wrap">How much do you want to spend?</h3>
-        <table>
-            <thead></thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="plan in plans | orderBy: plan.price"><% plan.price | currency: '£': 0 %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Display ads shown</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price"><% plan.display_ads_shown  %></td>
+                    </tr>
+                    <tr>
+                        <td>Fully optimised display ads</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.fully_optimized_display_ads == 1}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Conversion optimised landing page</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.conversion_optimised_landing == 1}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Brand awareness</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.brand_awareness == 1}"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Lead generation</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.lead_generation == 1}"></i></td>
+                    </tr>
+                    <tr class="buttons">
+                        <td></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price" ng-click="selectPlan(plan.title)" ng-class="{active: isSelectedPlan(plan.title) }">Select</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </section>
