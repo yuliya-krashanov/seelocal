@@ -9,6 +9,7 @@
             $routeProvider
                 .when('/step/:step', {
                     templateUrl: function(params){
+                       // if(params.step < 1 && params.step > 5)
                         return 'templates/steps/' + params.step + '.html';
                     },
                     controller: 'StepsController'
@@ -86,7 +87,7 @@
             $location.path('/step/1');
         }
     }])
-    .controller('StepsController', ['$scope', '$http', '$location', '$routeParams', 'localStorageService', 'AuthService', function($scope, $http, $location, $routeParams, localStorageService, AuthService){
+    .controller('StepsController', ['$scope', '$http', '$location', '$routeParams', 'StepsService', 'localStorageService', 'AuthService', function($scope, $http, $location, $routeParams, StepsService, localStorageService, AuthService){
         $scope.step = $routeParams.step;
         $scope.leftMarginPer = 18.7;
 
@@ -105,6 +106,10 @@
             return step == $scope.step;
         };
 
+        $scope.saveData = function(step){
+            StepsService.prepForSaveData(step);
+        };
+
         if (!AuthService.checkUserLoggedIn()){
             $location.path('/login');
         }
@@ -113,7 +118,9 @@
         $scope.selectedTab = TabsService.getSelectedTab();
 
         $scope.selectTab = function(id){
+            TabsService.setSelectedTab(id);
             $scope.selectedTab = id;
+            console.log(TabsService.getSelectedTab());
         };
 
         $scope.isSelectedTab = function(id){
@@ -132,7 +139,7 @@
             templateUrl:'templates/steps/navigation-bottom.html'
         };
     }])
-    .controller('ObjectivesController', ['$scope', '$http', 'SharedProperties', 'localStorageService', function($scope, $http, SharedProperties, localStorageService){
+    .controller('ObjectivesController', ['$scope', '$http', '$location', 'TabsService', 'localStorageService', function($scope, $http, $location, TabsService, localStorageService){
         $scope.objectives = [];
 
         $http.post('api/objectives').success(function(data){
@@ -140,6 +147,18 @@
         }).error(function(error){
             console.log(error);
         });
+
+        $scope.$on('stepData', function(){
+            console.log(TabsService.getSelectedTab());
+            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
+           // $location.path('step/' + step);
+        });
+
+        $scope.saveData = function(step){
+            console.log(TabsService.getSelectedTab());
+            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
+            $location.path('step/' + step);
+        };
     }])
     .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         angular.element(document).ready(function () {
@@ -224,7 +243,46 @@
     }])
 
     .controller('OverviewController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+        $scope.overview = [{
+                title: 'Campaign Name',
+                value: localStorageService.get('campaign_name') || '',
+                location: '/step/2?tab=1'
+            },
+            {
+                title: 'Campaign cost',
+                value: localStorageService.get('campaign_cost') || '',
+                location: '/step/4'
+            },
+            {
+                title: 'Timeframe',
+                value: localStorageService.get('campaign_period') || '',
+                location: '/step/4'
+            },
+            {
+                title: 'Objective',
+                value: localStorageService.get('campaign_objective') || '',
+                location: '/step/1'
+            },
+            {
+                title: 'Phone number',
+                value: localStorageService.get('campaign_phone') || '',
+                location: '/step/2?tab=1'
+            },
+            {
+                title: 'Promotion',
+                value: localStorageService.get('campaign_promotion') || '',
+                location: '/step/3?tab=5'
+            }
+        ];
 
+        $scope.targeting = {
+            locations: localStorageService.get('campaign_locations') || '',
+            gender: localStorageService.get('campaign_gender') || '',
+            age: localStorageService.get('campaign_age') || '',
+            interests: localStorageService.get('campaign_interests') || '',
+            keywords: localStorageService.get('campaign_keywords') || '',
+            websites: localStorageService.get('campaign_websites') || ''
+        };
     }])
 
     .filter('excerptLimitTo', function(){
@@ -234,6 +292,8 @@
             }
     })
     .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+        $scope.name = localStorageService.get('campaign_name') || '';
+        $scope.phone = localStorageService.get('campaign_phone') || '';
         $scope.locations = localStorageService.get('campaign_locations') || [{}];
         $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
         $scope.interests = [];
@@ -364,9 +424,16 @@
     }])
 
 
-    .factory('StepsService', ['$http', 'localStorageService', function($http, localStorageService){
+    .factory('StepsService', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
          return {
-
+            calledStep: '',
+            prepForSaveData: function(step){
+                this.calledStep = step;
+                this.saveData();
+            },
+            saveData: function(){
+                $rootScope.$broadcast('saveData');
+            }
          }
     }]);
 }());

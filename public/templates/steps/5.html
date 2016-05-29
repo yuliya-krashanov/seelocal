@@ -10,21 +10,74 @@
             </ul>
         </aside>
         <div class="content">
-            <form action="">
-                <div class="form-wrap">
+            <form action="" ng-submit="confirm()" novalidate>
+                <div class="form-wrap details" ng-show="isSelectedTab(1)">
                     <ul class="overview">
-                        <li ng-repeat="data in overview"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
+                        <li ng-repeat="data in overview"><span class="title"><% data.title %> |</span> <span class="value"><% data.value %></span> <a class="link pull-right" href="<% data.location %>">Edit</a></li>
                     </ul>
                 </div>
-                <div class="form-wrap">
+                <div class="form-wrap details" ng-show="isSelectedTab(2)">
                     <ul class="overview">
-                        <li ng-repeat="data in targeting"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
+                        <li><span class="title">Location(s) |</span> <span class="value"><ul><li ng-repeat="location in targeting.locations"><% location.location %></li></ul></span><a class="link pull-right" href="/step/2?tab=2">Edit</a></li>
+                        <li><span class="title">Demographics |</span> <span class="value"><% targeting.gender %>, <% targeting.age %></span><a class="link pull-right" href="/step/2?tab=3">Edit</a></li>
+                        <li><span class="title">Interests |</span> <span class="value"><ul><li ng-repeat="interest in targeting.interests"><% interest.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=4">Edit</a></li>
+                        <li><span class="title">Keywords |</span> <span class="value"><ul><li ng-repeat="keyword in targeting.keywords"><% keyword.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=5">Edit</a></li>
+                        <li><span class="title">Target Websites |</span> <span class="value"><ul><li ng-repeat="website in targeting.websites"><% website.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=6">Edit</a></li>
                     </ul>
                 </div>
-                <div class="form-wrap">
-                    <ul class="overview">
-                        <li ng-repeat="data in targeting"><% data.name %> | <% data.value %> <span class="link" ng-click="editData(data.name)">Edit</span></li>
-                    </ul>
+                <div class="form-wrap details" ng-show="isSelectedTab(3)">
+                    <p>Logo</p>
+                    <a class="link pull-right" href="/step/3?tab=3">Edit</a>
+                    <div class="thumb-wrap">
+                        <div class="thumb col-sm-3">
+                            <div class="thumbnail">
+                                <img ng-src="logo.src" />
+                            </div>
+                        </div>
+                    </div>
+                    <p>Images</p>
+                    <div class="thumb-wrap">
+                        <div class="thumb col-sm-3" ng-repeat="image in images">
+                            <div class="thumbnail">
+                                <img ng-src="image.link" />
+                            </div>
+                        </div>
+                    </div>
+                    <a class="link pull-right" href="/step/3?tab=4">Edit</a>
+                </div>
+                <div class="form-wrap details" ng-show="isSelectedTab(4)">
+                    <p>Personal information</p>
+                    <div class="row">
+                        <input type="text" ng-model="fullName" placeholder="Full name" required />
+                    </div>
+                    <div class="row">
+                         <div class="col-sm-6">
+                             <input type="text" placeholder="House name/number" ng-model="houseNumber" />
+                             <input type="text" placeholder="Town/city" ng-model="city" />
+                             <input type="text" placeholder="Post code" ng-model="postcode" />
+                         </div>   
+                         <div class="col-sm-6">
+                             <input type="text" placeholder="Second line of address" ng-model="street" />
+                             <input type="text" placeholder="Country" ng-model="postcode" />
+                         </div>
+                    </div>
+                    <p>Card Information</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <select ng-model="cardType">
+                                <option value="mastercard">Mastercard</option>
+                                <option value="visa">Visa</option>
+                            </select>
+                            <input type="text" ng-model="expiryDate" placeholder="Expiry Date (mm/year)"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="Card number" ng-model="cardNumber"/>
+                            <input type="text" placeholder="Security code" ng-model="securityCode"/>
+                        </div>
+                    </div>
+                    <input type="checkbox" checked /> I accepted <a href="/terms-and-conditions">
+                    <div class="confirm-button" ng-click="confirm()">Confirm & Pay</div>
+                </a>
                 </div>
             </form>
         </div>

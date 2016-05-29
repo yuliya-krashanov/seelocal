@@ -16,8 +16,8 @@
             <form name="demographForm" ng-submit="saveData(demographForm)" novalidate>
                 <div class="form-wrap details" ng-show="isSelectedTab(1)">
                     <p>Enter the <span>name of your campaign</span> and the <span>phone number</span> you would like us to include on the landing page, which users can use to get in touch with you</p>
-                    <input type="text" placeholder="Campaign Name" required>
-                    <input type="text" placeholder="Phone Number" required>
+                    <input type="text" placeholder="Campaign Name" ng-model="name" required>
+                    <input type="text" placeholder="Phone Number"  ng-model="phone" required>
                 </div>
                 <div class="form-wrap details" ng-show="isSelectedTab(2)">
                     <p>Enter the target <span>locations</span> of your campaign</p>
@@ -39,6 +39,11 @@
                 <div class="form-wrap details" ng-show="isSelectedTab(3)">
                     <p>Enter the <span>demographics</span> of your taget audience</p>
                     <input type="text" placeholder="Age" ng-model="age">
+                    <select name=""  ng-model="gender" placeholder="Gender(s)">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Male & Females">Male & Females</option>
+                    </select>
                     <input type="text" placeholder="Gender(s)" ng-model="genders">
                     <input type="text" placeholder="Languages" ng-model="languages">
                 </div>
