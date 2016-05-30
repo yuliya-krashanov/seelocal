@@ -315,6 +315,9 @@ section.step {
             &::-webkit-input-placeholder, &::-moz-placeholder{
               color: $black;
             }
+            &.ng-invalid{
+              color: #a94442;
+            }
           }
           select{
             display: inline-block;
@@ -486,8 +489,9 @@ section.buttons {
   .prev i {
     margin-right: 13px;
   }
-  a, a:hover {
+  span, span:hover {
     color: $green;
+    cursor: pointer;
     i {
       width: 25px;
       height: 25px;

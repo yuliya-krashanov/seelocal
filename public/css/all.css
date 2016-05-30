@@ -294,6 +294,8 @@ section.step {
             outline: none; }
             section.step .wrap .content .form-wrap.details input::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder, section.step .wrap .content .form-wrap.details textarea::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details textarea::-moz-placeholder {
               color: #252525; }
+            section.step .wrap .content .form-wrap.details input.ng-invalid, section.step .wrap .content .form-wrap.details select.ng-invalid, section.step .wrap .content .form-wrap.details textarea.ng-invalid {
+              color: #a94442; }
           section.step .wrap .content .form-wrap.details select {
             display: inline-block;
             background: none;
@@ -456,9 +458,10 @@ section.buttons {
     margin-left: 13px; }
   section.buttons .prev i {
     margin-right: 13px; }
-  section.buttons a, section.buttons a:hover {
-    color: #4dc01d; }
-    section.buttons a i, section.buttons a:hover i {
+  section.buttons span, section.buttons span:hover {
+    color: #4dc01d;
+    cursor: pointer; }
+    section.buttons span i, section.buttons span:hover i {
       width: 25px;
       height: 25px;
       color: #fff;

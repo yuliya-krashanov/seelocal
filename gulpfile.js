@@ -13,13 +13,13 @@ var elixir = require('laravel-elixir');
 
 
 gulp.task("copyfiles", function() {
-    gulp.src("bower_components/autosize/dist/autosize.min.js")
+    gulp.src("bower_components/angular-messages/angular-messages.min.js")
         .pipe(gulp.dest("public/js/"));
+
 });
 
 elixir(function(mix) {
     mix.sass('app.scss', 'public/css');
-
 
     mix.styles([
         'bootstrap.min.css',
@@ -30,6 +30,7 @@ elixir(function(mix) {
         'angular.min.js',
         'angular-route.min.js',
         'angular-local-storage.min.js',
+        'angular-messages.min.js',
         'ng-flow-standalone.min.js',
         'jquery.min.js',
         'bootstrap.min.js',

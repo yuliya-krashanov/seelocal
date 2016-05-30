@@ -338,6 +338,19 @@ d){if(0===d)c.push(a);else{var f=a.match(/(\w+)(?:[?*])?(.*)/),g=f[1];c.push(b[g
  */
 !function(a,b){var c=b.isDefined,d=b.isUndefined,e=b.isNumber,f=b.isObject,g=b.isArray,h=b.extend,i=b.toJson;b.module("LocalStorageModule",[]).provider("localStorageService",function(){this.prefix="ls",this.storageType="localStorage",this.cookie={expiry:30,path:"/"},this.notify={setItem:!0,removeItem:!1},this.setPrefix=function(a){return this.prefix=a,this},this.setStorageType=function(a){return this.storageType=a,this},this.setStorageCookie=function(a,b){return this.cookie.expiry=a,this.cookie.path=b,this},this.setStorageCookieDomain=function(a){return this.cookie.domain=a,this},this.setNotify=function(a,b){return this.notify={setItem:a,removeItem:b},this},this.$get=["$rootScope","$window","$document","$parse",function(a,b,j,k){var l,m=this,n=m.prefix,o=m.cookie,p=m.notify,q=m.storageType;j?j[0]&&(j=j[0]):j=document,"."!==n.substr(-1)&&(n=n?n+".":"");var r=function(a){return n+a},s=function(){try{var c=q in b&&null!==b[q],d=r("__"+Math.round(1e7*Math.random()));return c&&(l=b[q],l.setItem(d,""),l.removeItem(d)),c}catch(e){return q="cookie",a.$broadcast("LocalStorageModule.notification.error",e.message),!1}}(),t=function(b,c){if(c=d(c)?null:i(c),!s||"cookie"===m.storageType)return s||a.$broadcast("LocalStorageModule.notification.warning","LOCAL_STORAGE_NOT_SUPPORTED"),p.setItem&&a.$broadcast("LocalStorageModule.notification.setitem",{key:b,newvalue:c,storageType:"cookie"}),z(b,c);try{l&&l.setItem(r(b),c),p.setItem&&a.$broadcast("LocalStorageModule.notification.setitem",{key:b,newvalue:c,storageType:m.storageType})}catch(e){return a.$broadcast("LocalStorageModule.notification.error",e.message),z(b,c)}return!0},u=function(b){if(!s||"cookie"===m.storageType)return s||a.$broadcast("LocalStorageModule.notification.warning","LOCAL_STORAGE_NOT_SUPPORTED"),A(b);var c=l?l.getItem(r(b)):null;if(!c||"null"===c)return null;try{return JSON.parse(c)}catch(d){return c}},v=function(){var b,c;for(b=0;b<arguments.length;b++)if(c=arguments[b],s&&"cookie"!==m.storageType)try{l.removeItem(r(c)),p.removeItem&&a.$broadcast("LocalStorageModule.notification.removeitem",{key:c,storageType:m.storageType})}catch(d){a.$broadcast("LocalStorageModule.notification.error",d.message),B(c)}else s||a.$broadcast("LocalStorageModule.notification.warning","LOCAL_STORAGE_NOT_SUPPORTED"),p.removeItem&&a.$broadcast("LocalStorageModule.notification.removeitem",{key:c,storageType:"cookie"}),B(c)},w=function(){if(!s)return a.$broadcast("LocalStorageModule.notification.warning","LOCAL_STORAGE_NOT_SUPPORTED"),[];var b=n.length,c=[];for(var d in l)if(d.substr(0,b)===n)try{c.push(d.substr(b))}catch(e){return a.$broadcast("LocalStorageModule.notification.error",e.Description),[]}return c},x=function(b){var c=n?new RegExp("^"+n):new RegExp,d=b?new RegExp(b):new RegExp;if(!s||"cookie"===m.storageType)return s||a.$broadcast("LocalStorageModule.notification.warning","LOCAL_STORAGE_NOT_SUPPORTED"),C();var e=n.length;for(var f in l)if(c.test(f)&&d.test(f.substr(e)))try{v(f.substr(e))}catch(g){return a.$broadcast("LocalStorageModule.notification.error",g.message),C()}return!0},y=function(){try{return b.navigator.cookieEnabled||"cookie"in j&&(j.cookie.length>0||(j.cookie="test").indexOf.call(j.cookie,"test")>-1)}catch(c){return a.$broadcast("LocalStorageModule.notification.error",c.message),!1}}(),z=function(b,c,h){if(d(c))return!1;if((g(c)||f(c))&&(c=i(c)),!y)return a.$broadcast("LocalStorageModule.notification.error","COOKIES_NOT_SUPPORTED"),!1;try{var k="",l=new Date,m="";if(null===c?(l.setTime(l.getTime()+-864e5),k="; expires="+l.toGMTString(),c=""):e(h)&&0!==h?(l.setTime(l.getTime()+24*h*60*60*1e3),k="; expires="+l.toGMTString()):0!==o.expiry&&(l.setTime(l.getTime()+24*o.expiry*60*60*1e3),k="; expires="+l.toGMTString()),b){var n="; path="+o.path;o.domain&&(m="; domain="+o.domain),j.cookie=r(b)+"="+encodeURIComponent(c)+k+n+m}}catch(p){return a.$broadcast("LocalStorageModule.notification.error",p.message),!1}return!0},A=function(b){if(!y)return a.$broadcast("LocalStorageModule.notification.error","COOKIES_NOT_SUPPORTED"),!1;for(var c=j.cookie&&j.cookie.split(";")||[],d=0;d<c.length;d++){for(var e=c[d];" "===e.charAt(0);)e=e.substring(1,e.length);if(0===e.indexOf(r(b)+"=")){var f=decodeURIComponent(e.substring(n.length+b.length+1,e.length));try{return JSON.parse(f)}catch(g){return f}}}return null},B=function(a){z(a,null)},C=function(){for(var a=null,b=n.length,c=j.cookie.split(";"),d=0;d<c.length;d++){for(a=c[d];" "===a.charAt(0);)a=a.substring(1,a.length);var e=a.substring(b,a.indexOf("="));B(e)}},D=function(){return q},E=function(a,b,d,e){e=e||b;var g=u(e);return null===g&&c(d)?g=d:f(g)&&f(d)&&(g=h(g,d)),k(b).assign(a,g),a.$watch(b,function(a){t(e,a)},f(a[b]))},F=function(){for(var a=0,c=b[q],d=0;d<c.length;d++)0===c.key(d).indexOf(n)&&a++;return a};return{isSupported:s,getStorageType:D,set:t,add:t,get:u,keys:w,remove:v,clearAll:x,bind:E,deriveKey:r,length:F,cookie:{isSupported:y,set:z,add:z,get:A,remove:B,clearAll:C}}}]})}(window,window.angular);
 //# sourceMappingURL=angular-local-storage.min.js.map
+/*
+ AngularJS v1.5.6
+ (c) 2010-2016 Google, Inc. http://angularjs.org
+ License: MIT
+*/
+(function(A,d){'use strict';function p(){return["$animate",function(w){return{restrict:"AE",transclude:"element",priority:1,terminal:!0,require:"^^ngMessages",link:function(n,l,a,c,m){var k=l[0],f,q=a.ngMessage||a.when;a=a.ngMessageExp||a.whenExp;var d=function(a){f=a?x(a)?a:a.split(/[\s,]+/):null;c.reRender()};a?(d(n.$eval(a)),n.$watchCollection(a,d)):d(q);var e,r;c.register(k,r={test:function(a){var g=f;a=g?x(g)?0<=g.indexOf(a):g.hasOwnProperty(a):void 0;return a},attach:function(){e||m(n,function(a){w.enter(a,
+null,l);e=a;var g=e.$$attachId=c.getAttachId();e.on("$destroy",function(){e&&e.$$attachId===g&&(c.deregister(k),r.detach())})})},detach:function(){if(e){var a=e;e=null;w.leave(a)}}})}}}]}var x=d.isArray,t=d.forEach,y=d.isString,z=d.element;d.module("ngMessages",[]).directive("ngMessages",["$animate",function(d){function n(a,c){return y(c)&&0===c.length||l(a.$eval(c))}function l(a){return y(a)?a.length:!!a}return{require:"ngMessages",restrict:"AE",controller:["$element","$scope","$attrs",function(a,
+c,m){function k(a,c){for(var b=c,f=[];b&&b!==a;){var h=b.$$ngMessageNode;if(h&&h.length)return e[h];b.childNodes.length&&-1==f.indexOf(b)?(f.push(b),b=b.childNodes[b.childNodes.length-1]):b.previousSibling?b=b.previousSibling:(b=b.parentNode,f.push(b))}}var f=this,q=0,p=0;this.getAttachId=function(){return p++};var e=this.messages={},r,s;this.render=function(g){g=g||{};r=!1;s=g;for(var e=n(c,m.ngMessagesMultiple)||n(c,m.multiple),b=[],q={},h=f.head,k=!1,p=0;null!=h;){p++;var u=h.message,v=!1;k||t(g,
+function(a,b){!v&&l(a)&&u.test(b)&&!q[b]&&(v=q[b]=!0,u.attach())});v?k=!e:b.push(u);h=h.next}t(b,function(a){a.detach()});b.length!==p?d.setClass(a,"ng-active","ng-inactive"):d.setClass(a,"ng-inactive","ng-active")};c.$watchCollection(m.ngMessages||m["for"],f.render);a.on("$destroy",function(){t(e,function(a){a.message.detach()})});this.reRender=function(){r||(r=!0,c.$evalAsync(function(){r&&s&&f.render(s)}))};this.register=function(g,c){var b=q.toString();e[b]={message:c};var d=a[0],h=e[b];f.head?
+(d=k(d,g))?(h.next=d.next,d.next=h):(h.next=f.head,f.head=h):f.head=h;g.$$ngMessageNode=b;q++;f.reRender()};this.deregister=function(c){var d=c.$$ngMessageNode;delete c.$$ngMessageNode;var b=e[d];(c=k(a[0],c))?c.next=b.next:f.head=b.next;delete e[d];f.reRender()}}]}}]).directive("ngMessagesInclude",["$templateRequest","$document","$compile",function(d,n,l){return{restrict:"AE",require:"^^ngMessages",link:function(a,c,m){var k=m.ngMessagesInclude||m.src;d(k).then(function(d){a.$$destroyed||l(d)(a,
+function(a){c.after(a);a=l.$$createComment?l.$$createComment("ngMessagesInclude",k):n[0].createComment(" ngMessagesInclude: "+k+" ");a=z(a);c.after(a);c.remove()})})}}}]).directive("ngMessage",p()).directive("ngMessageExp",p())})(window,window.angular);
+//# sourceMappingURL=angular-messages.min.js.map
+
 /*! ng-flow 2.7.1 */
 !function(a,b,c){"use strict";function d(b){if(this.support=!("undefined"==typeof File||"undefined"==typeof Blob||"undefined"==typeof FileList||!Blob.prototype.slice&&!Blob.prototype.webkitSlice&&!Blob.prototype.mozSlice),this.support){this.supportDirectory=/Chrome/.test(a.navigator.userAgent),this.files=[],this.defaults={chunkSize:1048576,forceChunkSize:!1,simultaneousUploads:3,singleFile:!1,fileParameterName:"file",progressCallbacksInterval:500,speedSmoothingFactor:.1,query:{},headers:{},withCredentials:!1,preprocess:null,method:"multipart",testMethod:"GET",uploadMethod:"POST",prioritizeFirstAndLastChunk:!1,allowDuplicateUploads:!1,target:"/",testChunks:!0,generateUniqueIdentifier:null,maxChunkRetries:0,chunkRetryInterval:null,permanentErrors:[404,415,500,501],successStatuses:[200,201,202],onDropStopPropagation:!1,initFileFn:null,readFileFn:f},this.opts={},this.events={};var c=this;this.onDrop=function(a){c.opts.onDropStopPropagation&&a.stopPropagation(),a.preventDefault();var b=a.dataTransfer;b.items&&b.items[0]&&b.items[0].webkitGetAsEntry?c.webkitReadDataTransfer(a):c.addFiles(b.files,a)},this.preventEvent=function(a){a.preventDefault()},this.opts=d.extend({},this.defaults,b||{})}}function e(a,b){this.flowObj=a,this.bytes=null,this.file=b,this.name=b.fileName||b.name,this.size=b.size,this.relativePath=b.relativePath||b.webkitRelativePath||this.name,this.uniqueIdentifier=a.generateUniqueIdentifier(b),this.chunks=[],this.paused=!1,this.error=!1,this.averageSpeed=0,this.currentSpeed=0,this._lastProgressCallback=Date.now(),this._prevUploadedSize=0,this._prevProgress=0,this.bootstrap()}function f(a,b,c,d,e){var f="slice";a.file.slice?f="slice":a.file.mozSlice?f="mozSlice":a.file.webkitSlice&&(f="webkitSlice"),e.readFinished(a.file[f](b,c,d))}function g(a,b,c){this.flowObj=a,this.fileObj=b,this.offset=c,this.tested=!1,this.retries=0,this.pendingRetry=!1,this.preprocessState=0,this.readState=0,this.loaded=0,this.total=0,this.chunkSize=this.flowObj.opts.chunkSize,this.startByte=this.offset*this.chunkSize,this.computeEndByte=function(){var a=Math.min(this.fileObj.size,(this.offset+1)*this.chunkSize);return this.fileObj.size-a<this.chunkSize&&!this.flowObj.opts.forceChunkSize&&(a=this.fileObj.size),a},this.endByte=this.computeEndByte(),this.xhr=null;var d=this;this.event=function(a,b){b=Array.prototype.slice.call(arguments),b.unshift(d),d.fileObj.chunkEvent.apply(d.fileObj,b)},this.progressHandler=function(a){a.lengthComputable&&(d.loaded=a.loaded,d.total=a.total),d.event("progress",a)},this.testHandler=function(a){var b=d.status(!0);"error"===b?(d.event(b,d.message()),d.flowObj.uploadNextChunk()):"success"===b?(d.tested=!0,d.event(b,d.message()),d.flowObj.uploadNextChunk()):d.fileObj.paused||(d.tested=!0,d.send())},this.doneHandler=function(a){var b=d.status();if("success"===b||"error"===b)delete this.data,d.event(b,d.message()),d.flowObj.uploadNextChunk();else{d.event("retry",d.message()),d.pendingRetry=!0,d.abort(),d.retries++;var c=d.flowObj.opts.chunkRetryInterval;null!==c?setTimeout(function(){d.send()},c):d.send()}}}function h(a,b){var c=a.indexOf(b);c>-1&&a.splice(c,1)}function i(a,b){return"function"==typeof a&&(b=Array.prototype.slice.call(arguments),a=a.apply(null,b.slice(1))),a}function j(a,b){setTimeout(a.bind(b),0)}function k(a,b){return l(arguments,function(b){b!==a&&l(b,function(b,c){a[c]=b})}),a}function l(a,b,c){if(a){var d;if("undefined"!=typeof a.length){for(d=0;d<a.length;d++)if(b.call(c,a[d],d)===!1)return}else for(d in a)if(a.hasOwnProperty(d)&&b.call(c,a[d],d)===!1)return}}var m=a.navigator.msPointerEnabled;d.prototype={on:function(a,b){a=a.toLowerCase(),this.events.hasOwnProperty(a)||(this.events[a]=[]),this.events[a].push(b)},off:function(a,b){a!==c?(a=a.toLowerCase(),b!==c?this.events.hasOwnProperty(a)&&h(this.events[a],b):delete this.events[a]):this.events={}},fire:function(a,b){b=Array.prototype.slice.call(arguments),a=a.toLowerCase();var c=!1;return this.events.hasOwnProperty(a)&&l(this.events[a],function(a){c=a.apply(this,b.slice(1))===!1||c},this),"catchall"!=a&&(b.unshift("catchAll"),c=this.fire.apply(this,b)===!1||c),!c},webkitReadDataTransfer:function(a){function b(a){a.readEntries(function(f){f.length?(g+=f.length,l(f,function(a){if(a.isFile){var e=a.fullPath;a.file(function(a){c(a,e)},d)}else a.isDirectory&&b(a.createReader())}),b(a)):e()},d)}function c(a,b){a.relativePath=b.substring(1),h.push(a),e()}function d(a){throw a}function e(){0==--g&&f.addFiles(h,a)}var f=this,g=a.dataTransfer.items.length,h=[];l(a.dataTransfer.items,function(a){var d=a.webkitGetAsEntry();return d?void(d.isFile?c(a.getAsFile(),d.fullPath):b(d.createReader())):void e()})},generateUniqueIdentifier:function(a){var b=this.opts.generateUniqueIdentifier;if("function"==typeof b)return b(a);var c=a.relativePath||a.webkitRelativePath||a.fileName||a.name;return a.size+"-"+c.replace(/[^0-9a-zA-Z_-]/gim,"")},uploadNextChunk:function(a){var b=!1;if(this.opts.prioritizeFirstAndLastChunk&&(l(this.files,function(a){return!a.paused&&a.chunks.length&&"pending"===a.chunks[0].status()?(a.chunks[0].send(),b=!0,!1):!a.paused&&a.chunks.length>1&&"pending"===a.chunks[a.chunks.length-1].status()?(a.chunks[a.chunks.length-1].send(),b=!0,!1):void 0}),b))return b;if(l(this.files,function(a){return a.paused||l(a.chunks,function(a){return"pending"===a.status()?(a.send(),b=!0,!1):void 0}),b?!1:void 0}),b)return!0;var c=!1;return l(this.files,function(a){return a.isComplete()?void 0:(c=!0,!1)}),c||a||j(function(){this.fire("complete")},this),!1},assignBrowse:function(a,c,d,e){"undefined"==typeof a.length&&(a=[a]),l(a,function(a){var f;"INPUT"===a.tagName&&"file"===a.type?f=a:(f=b.createElement("input"),f.setAttribute("type","file"),k(f.style,{visibility:"hidden",position:"absolute",width:"1px",height:"1px"}),a.appendChild(f),a.addEventListener("click",function(){f.click()},!1)),this.opts.singleFile||d||f.setAttribute("multiple","multiple"),c&&f.setAttribute("webkitdirectory","webkitdirectory"),l(e,function(a,b){f.setAttribute(b,a)});var g=this;f.addEventListener("change",function(a){a.target.value&&(g.addFiles(a.target.files,a),a.target.value="")},!1)},this)},assignDrop:function(a){"undefined"==typeof a.length&&(a=[a]),l(a,function(a){a.addEventListener("dragover",this.preventEvent,!1),a.addEventListener("dragenter",this.preventEvent,!1),a.addEventListener("drop",this.onDrop,!1)},this)},unAssignDrop:function(a){"undefined"==typeof a.length&&(a=[a]),l(a,function(a){a.removeEventListener("dragover",this.preventEvent),a.removeEventListener("dragenter",this.preventEvent),a.removeEventListener("drop",this.onDrop)},this)},isUploading:function(){var a=!1;return l(this.files,function(b){return b.isUploading()?(a=!0,!1):void 0}),a},_shouldUploadNext:function(){var a=0,b=!0,c=this.opts.simultaneousUploads;return l(this.files,function(d){l(d.chunks,function(d){return"uploading"===d.status()&&(a++,a>=c)?(b=!1,!1):void 0})}),b&&a},upload:function(){var a=this._shouldUploadNext();if(a!==!1){this.fire("uploadStart");for(var b=!1,c=1;c<=this.opts.simultaneousUploads-a;c++)b=this.uploadNextChunk(!0)||b;b||j(function(){this.fire("complete")},this)}},resume:function(){l(this.files,function(a){a.resume()})},pause:function(){l(this.files,function(a){a.pause()})},cancel:function(){for(var a=this.files.length-1;a>=0;a--)this.files[a].cancel()},progress:function(){var a=0,b=0;return l(this.files,function(c){a+=c.progress()*c.size,b+=c.size}),b>0?a/b:0},addFile:function(a,b){this.addFiles([a],b)},addFiles:function(a,b){var c=[];l(a,function(a){if((!m||m&&a.size>0)&&(a.size%4096!==0||"."!==a.name&&"."!==a.fileName)&&(this.opts.allowDuplicateUploads||!this.getFromUniqueIdentifier(this.generateUniqueIdentifier(a)))){var d=new e(this,a);this.fire("fileAdded",d,b)&&c.push(d)}},this),this.fire("filesAdded",c,b)&&l(c,function(a){this.opts.singleFile&&this.files.length>0&&this.removeFile(this.files[0]),this.files.push(a)},this),this.fire("filesSubmitted",c,b)},removeFile:function(a){for(var b=this.files.length-1;b>=0;b--)this.files[b]===a&&(this.files.splice(b,1),a.abort())},getFromUniqueIdentifier:function(a){var b=!1;return l(this.files,function(c){c.uniqueIdentifier===a&&(b=c)}),b},getSize:function(){var a=0;return l(this.files,function(b){a+=b.size}),a},sizeUploaded:function(){var a=0;return l(this.files,function(b){a+=b.sizeUploaded()}),a},timeRemaining:function(){var a=0,b=0;return l(this.files,function(c){c.paused||c.error||(a+=c.size-c.sizeUploaded(),b+=c.averageSpeed)}),a&&!b?Number.POSITIVE_INFINITY:a||b?Math.floor(a/b):0}},e.prototype={measureSpeed:function(){var a=Date.now()-this._lastProgressCallback;if(a){var b=this.flowObj.opts.speedSmoothingFactor,c=this.sizeUploaded();this.currentSpeed=Math.max((c-this._prevUploadedSize)/a*1e3,0),this.averageSpeed=b*this.currentSpeed+(1-b)*this.averageSpeed,this._prevUploadedSize=c}},chunkEvent:function(a,b,c){switch(b){case"progress":if(Date.now()-this._lastProgressCallback<this.flowObj.opts.progressCallbacksInterval)break;this.measureSpeed(),this.flowObj.fire("fileProgress",this,a),this.flowObj.fire("progress"),this._lastProgressCallback=Date.now();break;case"error":this.error=!0,this.abort(!0),this.flowObj.fire("fileError",this,c,a),this.flowObj.fire("error",c,this,a);break;case"success":if(this.error)return;this.measureSpeed(),this.flowObj.fire("fileProgress",this,a),this.flowObj.fire("progress"),this._lastProgressCallback=Date.now(),this.isComplete()&&(this.currentSpeed=0,this.averageSpeed=0,this.flowObj.fire("fileSuccess",this,c,a));break;case"retry":this.flowObj.fire("fileRetry",this,a)}},pause:function(){this.paused=!0,this.abort()},resume:function(){this.paused=!1,this.flowObj.upload()},abort:function(a){this.currentSpeed=0,this.averageSpeed=0;var b=this.chunks;a&&(this.chunks=[]),l(b,function(a){"uploading"===a.status()&&(a.abort(),this.flowObj.uploadNextChunk())},this)},cancel:function(){this.flowObj.removeFile(this)},retry:function(){this.bootstrap(),this.flowObj.upload()},bootstrap:function(){"function"==typeof this.flowObj.opts.initFileFn&&this.flowObj.opts.initFileFn(this),this.abort(!0),this.error=!1,this._prevProgress=0;for(var a=this.flowObj.opts.forceChunkSize?Math.ceil:Math.floor,b=Math.max(a(this.size/this.flowObj.opts.chunkSize),1),c=0;b>c;c++)this.chunks.push(new g(this.flowObj,this,c))},progress:function(){if(this.error)return 1;if(1===this.chunks.length)return this._prevProgress=Math.max(this._prevProgress,this.chunks[0].progress()),this._prevProgress;var a=0;l(this.chunks,function(b){a+=b.progress()*(b.endByte-b.startByte)});var b=a/this.size;return this._prevProgress=Math.max(this._prevProgress,b>.9999?1:b),this._prevProgress},isUploading:function(){var a=!1;return l(this.chunks,function(b){return"uploading"===b.status()?(a=!0,!1):void 0}),a},isComplete:function(){var a=!1;return l(this.chunks,function(b){var c=b.status();return"pending"===c||"uploading"===c||"reading"===c||1===b.preprocessState||1===b.readState?(a=!0,!1):void 0}),!a},sizeUploaded:function(){var a=0;return l(this.chunks,function(b){a+=b.sizeUploaded()}),a},timeRemaining:function(){if(this.paused||this.error)return 0;var a=this.size-this.sizeUploaded();return a&&!this.averageSpeed?Number.POSITIVE_INFINITY:a||this.averageSpeed?Math.floor(a/this.averageSpeed):0},getType:function(){return this.file.type&&this.file.type.split("/")[1]},getExtension:function(){return this.name.substr((~-this.name.lastIndexOf(".")>>>0)+2).toLowerCase()}},g.prototype={getParams:function(){return{flowChunkNumber:this.offset+1,flowChunkSize:this.flowObj.opts.chunkSize,flowCurrentChunkSize:this.endByte-this.startByte,flowTotalSize:this.fileObj.size,flowIdentifier:this.fileObj.uniqueIdentifier,flowFilename:this.fileObj.name,flowRelativePath:this.fileObj.relativePath,flowTotalChunks:this.fileObj.chunks.length}},getTarget:function(a,b){return a+=a.indexOf("?")<0?"?":"&",a+b.join("&")},test:function(){this.xhr=new XMLHttpRequest,this.xhr.addEventListener("load",this.testHandler,!1),this.xhr.addEventListener("error",this.testHandler,!1);var a=i(this.flowObj.opts.testMethod,this.fileObj,this),b=this.prepareXhrRequest(a,!0);this.xhr.send(b)},preprocessFinished:function(){this.endByte=this.computeEndByte(),this.preprocessState=2,this.send()},readFinished:function(a){this.readState=2,this.bytes=a,this.send()},send:function(){var a=this.flowObj.opts.preprocess,b=this.flowObj.opts.readFileFn;if("function"==typeof a)switch(this.preprocessState){case 0:return this.preprocessState=1,void a(this);case 1:return}switch(this.readState){case 0:return this.readState=1,void b(this.fileObj,this.startByte,this.endByte,this.fileType,this);case 1:return}if(this.flowObj.opts.testChunks&&!this.tested)return void this.test();this.loaded=0,this.total=0,this.pendingRetry=!1,this.xhr=new XMLHttpRequest,this.xhr.upload.addEventListener("progress",this.progressHandler,!1),this.xhr.addEventListener("load",this.doneHandler,!1),this.xhr.addEventListener("error",this.doneHandler,!1);var c=i(this.flowObj.opts.uploadMethod,this.fileObj,this),d=this.prepareXhrRequest(c,!1,this.flowObj.opts.method,this.bytes);this.xhr.send(d)},abort:function(){var a=this.xhr;this.xhr=null,a&&a.abort()},status:function(a){return 1===this.readState?"reading":this.pendingRetry||1===this.preprocessState?"uploading":this.xhr?this.xhr.readyState<4?"uploading":this.flowObj.opts.successStatuses.indexOf(this.xhr.status)>-1?"success":this.flowObj.opts.permanentErrors.indexOf(this.xhr.status)>-1||!a&&this.retries>=this.flowObj.opts.maxChunkRetries?"error":(this.abort(),"pending"):"pending"},message:function(){return this.xhr?this.xhr.responseText:""},progress:function(){if(this.pendingRetry)return 0;var a=this.status();return"success"===a||"error"===a?1:"pending"===a?0:this.total>0?this.loaded/this.total:0},sizeUploaded:function(){var a=this.endByte-this.startByte;return"success"!==this.status()&&(a=this.progress()*a),a},prepareXhrRequest:function(a,b,c,d){var e=i(this.flowObj.opts.query,this.fileObj,this,b);e=k(e,this.getParams());var f=i(this.flowObj.opts.target,this.fileObj,this,b),g=null;if("GET"===a||"octet"===c){var h=[];l(e,function(a,b){h.push([encodeURIComponent(b),encodeURIComponent(a)].join("="))}),f=this.getTarget(f,h),g=d||null}else g=new FormData,l(e,function(a,b){g.append(b,a)}),g.append(this.flowObj.opts.fileParameterName,d,this.fileObj.file.name);return this.xhr.open(a,f,!0),this.xhr.withCredentials=this.flowObj.opts.withCredentials,l(i(this.flowObj.opts.headers,this.fileObj,this,b),function(a,b){this.xhr.setRequestHeader(b,a)},this),g}},d.evalOpts=i,d.extend=k,d.each=l,d.FlowFile=e,d.FlowChunk=g,d.version="2.10.1","object"==typeof module&&module&&"object"==typeof module.exports?module.exports=d:(a.Flow=d,"function"==typeof define&&define.amd&&define("flow",[],function(){return d}))}(window,document),angular.module("flow.provider",[]).provider("flowFactory",function(){"use strict";this.defaults={},this.factory=function(a){return new Flow(a)},this.events=[],this.on=function(a,b){this.events.push([a,b])},this.$get=function(){var a=this.factory,b=this.defaults,c=this.events;return{create:function(d){var e=a(angular.extend({},b,d));return angular.forEach(c,function(a){e.on(a[0],a[1])}),e}}}}),angular.module("flow.init",["flow.provider"]).controller("flowCtrl",["$scope","$attrs","$parse","flowFactory",function(a,b,c,d){var e=angular.extend({},a.$eval(b.flowInit)),f=a.$eval(b.flowObject)||d.create(e),g=function(b){var c=Array.prototype.slice.call(arguments);c.shift();var d=a.$broadcast.apply(a,["flow::"+b,f].concat(c));return{progress:1,filesSubmitted:1,fileSuccess:1,fileError:1,complete:1}[b]&&a.$apply(),d.defaultPrevented?!1:void 0};f.on("catchAll",g),a.$on("$destroy",function(){f.off("catchAll",g)}),a.$flow=f,b.hasOwnProperty("flowName")&&(c(b.flowName).assign(a,f),a.$on("$destroy",function(){c(b.flowName).assign(a)}))}]).directive("flowInit",[function(){return{scope:!0,controller:"flowCtrl"}}]),angular.module("flow.btn",["flow.init"]).directive("flowBtn",[function(){return{restrict:"EA",scope:!1,require:"^flowInit",link:function(a,b,c){var d=c.hasOwnProperty("flowDirectory"),e=c.hasOwnProperty("flowSingleFile"),f=c.hasOwnProperty("flowAttrs")&&a.$eval(c.flowAttrs);a.$flow.assignBrowse(b,d,e,f)}}}]),angular.module("flow.dragEvents",["flow.init"]).directive("flowPreventDrop",function(){return{scope:!1,link:function(a,b,c){b.bind("drop dragover",function(a){a.preventDefault()})}}}).directive("flowDragEnter",["$timeout",function(a){return{scope:!1,link:function(b,c,d){function e(a){var b=!1,c=a.dataTransfer||a.originalEvent.dataTransfer;return angular.forEach(c&&c.types,function(a){"Files"===a&&(b=!0)}),b}var f,g=!1;c.bind("dragover",function(c){e(c)&&(g||(b.$apply(d.flowDragEnter),g=!0),a.cancel(f),c.preventDefault())}),c.bind("dragleave drop",function(c){a.cancel(f),f=a(function(){b.$eval(d.flowDragLeave),f=null,g=!1},100)})}}}]),angular.module("flow.drop",["flow.init"]).directive("flowDrop",function(){return{scope:!1,require:"^flowInit",link:function(a,b,c){function d(){a.$flow.assignDrop(b)}function e(){a.$flow.unAssignDrop(b)}c.flowDropEnabled?a.$watch(c.flowDropEnabled,function(a){a?d():e()}):d()}}}),!function(a){"use strict";function b(a){return a.charAt(0).toUpperCase()+a.slice(1)}var c=a.module("flow.events",["flow.init"]),d={fileSuccess:["$file","$message"],fileProgress:["$file"],fileAdded:["$file","$event"],filesAdded:["$files","$event"],filesSubmitted:["$files","$event"],fileRetry:["$file"],fileError:["$file","$message"],uploadStart:[],complete:[],progress:[],error:["$message","$file"]};a.forEach(d,function(d,e){var f="flow"+b(e);"flowUploadStart"==f&&(f="flowUploadStarted"),c.directive(f,[function(){return{require:"^flowInit",controller:["$scope","$attrs",function(b,c){b.$on("flow::"+e,function(){var e=Array.prototype.slice.call(arguments),g=e.shift();if(b.$flow===e.shift()){var h={};a.forEach(d,function(a,b){h[a]=e[b]}),b.$eval(c[f],h)===!1&&g.preventDefault()}})}]}}])})}(angular),angular.module("flow.img",["flow.init"]).directive("flowImg",[function(){return{scope:!1,require:"^flowInit",link:function(a,b,c){var d=c.flowImg;a.$watch(d,function(b){if(b){var d=new FileReader;d.readAsDataURL(b.file),d.onload=function(b){a.$apply(function(){c.$set("src",b.target.result)})}}})}}}]),angular.module("flow.transfers",["flow.init"]).directive("flowTransfers",[function(){return{scope:!0,require:"^flowInit",link:function(a){a.transfers=a.$flow.files}}}]),angular.module("flow",["flow.provider","flow.init","flow.events","flow.btn","flow.drop","flow.transfers","flow.img","flow.dragEvents"]);
 /*! jQuery v2.2.3 | (c) jQuery Foundation | jquery.org/license */
@@ -359,7 +372,7 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
 */
 !function(e,t){if("function"==typeof define&&define.amd)define(["exports","module"],t);else if("undefined"!=typeof exports&&"undefined"!=typeof module)t(exports,module);else{var n={exports:{}};t(n.exports,n),e.autosize=n.exports}}(this,function(e,t){"use strict";function n(e){function t(){var t=window.getComputedStyle(e,null);p=t.overflowY,"vertical"===t.resize?e.style.resize="none":"both"===t.resize&&(e.style.resize="horizontal"),c="content-box"===t.boxSizing?-(parseFloat(t.paddingTop)+parseFloat(t.paddingBottom)):parseFloat(t.borderTopWidth)+parseFloat(t.borderBottomWidth),isNaN(c)&&(c=0),i()}function n(t){var n=e.style.width;e.style.width="0px",e.offsetWidth,e.style.width=n,p=t,f&&(e.style.overflowY=t),o()}function o(){var t=window.pageYOffset,n=document.body.scrollTop,o=e.style.height;e.style.height="auto";var i=e.scrollHeight+c;return 0===e.scrollHeight?void(e.style.height=o):(e.style.height=i+"px",v=e.clientWidth,document.documentElement.scrollTop=t,void(document.body.scrollTop=n))}function i(){var t=e.style.height;o();var i=window.getComputedStyle(e,null);if(i.height!==e.style.height?"visible"!==p&&n("visible"):"hidden"!==p&&n("hidden"),t!==e.style.height){var r=d("autosize:resized");e.dispatchEvent(r)}}var s=void 0===arguments[1]?{}:arguments[1],a=s.setOverflowX,l=void 0===a?!0:a,u=s.setOverflowY,f=void 0===u?!0:u;if(e&&e.nodeName&&"TEXTAREA"===e.nodeName&&!r.has(e)){var c=null,p=null,v=e.clientWidth,h=function(){e.clientWidth!==v&&i()},y=function(t){window.removeEventListener("resize",h,!1),e.removeEventListener("input",i,!1),e.removeEventListener("keyup",i,!1),e.removeEventListener("autosize:destroy",y,!1),e.removeEventListener("autosize:update",i,!1),r["delete"](e),Object.keys(t).forEach(function(n){e.style[n]=t[n]})}.bind(e,{height:e.style.height,resize:e.style.resize,overflowY:e.style.overflowY,overflowX:e.style.overflowX,wordWrap:e.style.wordWrap});e.addEventListener("autosize:destroy",y,!1),"onpropertychange"in e&&"oninput"in e&&e.addEventListener("keyup",i,!1),window.addEventListener("resize",h,!1),e.addEventListener("input",i,!1),e.addEventListener("autosize:update",i,!1),r.add(e),l&&(e.style.overflowX="hidden",e.style.wordWrap="break-word"),t()}}function o(e){if(e&&e.nodeName&&"TEXTAREA"===e.nodeName){var t=d("autosize:destroy");e.dispatchEvent(t)}}function i(e){if(e&&e.nodeName&&"TEXTAREA"===e.nodeName){var t=d("autosize:update");e.dispatchEvent(t)}}var r="function"==typeof Set?new Set:function(){var e=[];return{has:function(t){return Boolean(e.indexOf(t)>-1)},add:function(t){e.push(t)},"delete":function(t){e.splice(e.indexOf(t),1)}}}(),d=function(e){return new Event(e)};try{new Event("test")}catch(s){d=function(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!1),t}}var a=null;"undefined"==typeof window||"function"!=typeof window.getComputedStyle?(a=function(e){return e},a.destroy=function(e){return e},a.update=function(e){return e}):(a=function(e,t){return e&&Array.prototype.forEach.call(e.length?e:[e],function(e){return n(e,t)}),e},a.destroy=function(e){return e&&Array.prototype.forEach.call(e.length?e:[e],o),e},a.update=function(e){return e&&Array.prototype.forEach.call(e.length?e:[e],i),e}),t.exports=a});
 (function(){
-    angular.module('seelocal', ['ngRoute', 'LocalStorageModule', 'flow'], function($interpolateProvider) {
+    angular.module('seelocal', ['ngRoute', 'ngMessages', 'LocalStorageModule', 'flow'], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     })
@@ -408,7 +421,6 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
     .run(['AuthService', '$rootScope', '$templateCache', function(AuthService, $rootScope, $templateCache){
         AuthService.checkServerLogin();
         $rootScope.$on('$viewContentLoaded', function() {
-            console.log($templateCache);
             $templateCache.removeAll();
         });
 
@@ -447,7 +459,7 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
             $location.path('/step/1');
         }
     }])
-    .controller('StepsController', ['$scope', '$http', '$location', '$routeParams', 'StepsService', 'localStorageService', 'AuthService', function($scope, $http, $location, $routeParams, StepsService, localStorageService, AuthService){
+    .controller('StepsController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'StepsService', 'localStorageService', 'AuthService', function($scope, $http, $location, $rootScope, $routeParams, StepsService, localStorageService, AuthService){
         $scope.step = $routeParams.step;
         $scope.leftMarginPer = 18.7;
 
@@ -467,20 +479,20 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
         };
 
         $scope.saveData = function(step){
-            StepsService.prepForSaveData(step);
+            $rootScope.$broadcast('saveData', step);
+            $location.path('step/' + step);
         };
 
         if (!AuthService.checkUserLoggedIn()){
             $location.path('/login');
         }
     }])
-    .controller('TabsController', ['$scope', 'TabsService', function($scope, TabsService){
-        $scope.selectedTab = TabsService.getSelectedTab();
+    .controller('TabsController', ['$scope', 'TabsService', '$rootScope', function($scope, TabsService, $rootScope){
+        $scope.selectedTab = TabsService.constructSelectedTab();
 
         $scope.selectTab = function(id){
             TabsService.setSelectedTab(id);
             $scope.selectedTab = id;
-            console.log(TabsService.getSelectedTab());
         };
 
         $scope.isSelectedTab = function(id){
@@ -494,32 +506,25 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
             };
         }])
     .directive('navigationBottom', ['$route', function($route){
-        return {
-            restrict: 'E',
-            templateUrl:'templates/steps/navigation-bottom.html'
-        };
-    }])
-    .controller('ObjectivesController', ['$scope', '$http', '$location', 'TabsService', 'localStorageService', function($scope, $http, $location, TabsService, localStorageService){
-        $scope.objectives = [];
+            return {
+                restrict: 'E',
+                templateUrl:'templates/steps/navigation-bottom.html'
+            };
+        }])
+    .controller('ObjectivesController', ['$scope', '$http', '$location', '$rootScope', 'TabsService', 'localStorageService', function($scope, $http, $location, $rootScope, TabsService, localStorageService){
+            $scope.objectives = [];
 
-        $http.post('api/objectives').success(function(data){
-            $scope.objectives = data;
-        }).error(function(error){
-            console.log(error);
-        });
+            $http.post('api/objectives').success(function(data){
+                $scope.objectives = data;
+            }).error(function(error){
+                console.log(error);
+            });
 
-        $scope.$on('stepData', function(){
-            console.log(TabsService.getSelectedTab());
-            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
-           // $location.path('step/' + step);
-        });
+            $scope.$on('saveData', function(event, data){
+                localStorageService.set('campaign_objective', TabsService.selectedTab);
+            });
 
-        $scope.saveData = function(step){
-            console.log(TabsService.getSelectedTab());
-            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
-            $location.path('step/' + step);
-        };
-    }])
+        }])
     .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         angular.element(document).ready(function () {
             autosize(jQuery('textarea'));
@@ -600,6 +605,11 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
         $scope.isSelectedPlan = function(name){
             return $scope.selectedPlan == name;
         }
+
+
+        $scope.$on('saveData', function(){
+
+        });
     }])
 
     .controller('OverviewController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
@@ -650,10 +660,13 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
                 if (input.length <= limit) return input;
                 return input.slice(0, limit) + '...';
             }
-    })
+        })
     .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         $scope.name = localStorageService.get('campaign_name') || '';
         $scope.phone = localStorageService.get('campaign_phone') || '';
+        $scope.age = localStorageService.get('campaign_age') || '';
+        $scope.gender = localStorageService.get('campaign_gender') || '';
+        $scope.languages = localStorageService.get('campaign_languages') || '';
         $scope.locations = localStorageService.get('campaign_locations') || [{}];
         $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
         $scope.interests = [];
@@ -706,10 +719,26 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
         $scope.removeLocation = function(key){
             $scope.locations.splice(key, 1);
         };
+        function clearArrayFromEmptyObjs(arr){
+            console.log(arr);
+            return arr.filter(function(obj){
+
+                return obj.hasOwnProperty();
+            });
+        }
+        $scope.$on('saveData', function(){
+            localStorageService.set('campaign_name',  $scope.name);
+            localStorageService.set('campaign_phone',  $scope.phone);
+            localStorageService.set('campaign_locations', $scope.locations);
+            localStorageService.set('campaign_age', $scope.age);
+            localStorageService.set('campaign_gender', $scope.gender);
+            localStorageService.set('campaign_languages', $scope.languages);
+            localStorageService.set('campaign_interests',  $scope.selectedInterests);
+            localStorageService.set('campaign_keywords',  $scope.keywords);
+            localStorageService.set('campaign_websites',  $scope.websites);
+        })
     }])
     .service('SharedProperties', function(){
-
-
          var properties = {
              selectedTab: 1
          };
@@ -723,19 +752,19 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
          };
     })
     .service('TabsService', ['$route', 'localStorageService', function($route, localStorageService){
-
-            if ($route.current.params.step == 1)
-                var selectedTab = localStorageService.get('campaign_objective') || 1;
-            else{
-                var selectedTab = ($route.current.params.tab) ? +$route.current.params.tab : 1;
-            }
-
             return {
-                getSelectedTab: function(){
-                    return selectedTab;
+                selectedTab: '',
+                constructSelectedTab: function(){
+                    if ($route.current.params.step == 1){
+                        this.selectedTab = localStorageService.get('campaign_objective') || 1;
+                    }
+                    else{
+                        this.selectedTab = ($route.current.params.tab) ? +$route.current.params.tab : 1;
+                    }
+                    return this.selectedTab;
                 },
                 setSelectedTab: function(value){
-                    selectedTab = value;
+                    this.selectedTab = value;
                 }
             }
         }])
@@ -785,17 +814,18 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
 
 
     .factory('StepsService', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
-         return {
-            calledStep: '',
-            prepForSaveData: function(step){
-                this.calledStep = step;
-                this.saveData();
-            },
-            saveData: function(){
-                $rootScope.$broadcast('saveData');
-            }
-         }
-    }]);
+             return {
+                calledStep: '',
+                prepForSaveData: function(step){
+                    this.calledStep = step;
+                    console.log(step);
+                    this.saveData();
+                },
+                saveData: function(){
+                    $rootScope.$broadcast('saveData');
+                }
+             }
+        }]);
 }());
 
 

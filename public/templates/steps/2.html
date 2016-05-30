@@ -16,20 +16,20 @@
             <form name="demographForm" ng-submit="saveData(demographForm)" novalidate>
                 <div class="form-wrap details" ng-show="isSelectedTab(1)">
                     <p>Enter the <span>name of your campaign</span> and the <span>phone number</span> you would like us to include on the landing page, which users can use to get in touch with you</p>
-                    <input type="text" placeholder="Campaign Name" ng-model="name" required>
-                    <input type="text" placeholder="Phone Number"  ng-model="phone" required>
+                    <input type="text" name="name" placeholder="Campaign Name" ng-model="name" required>
+                    <input type="text" name="phone" placeholder="Phone Number"  ng-model="phone" required>
                 </div>
                 <div class="form-wrap details" ng-show="isSelectedTab(2)">
                     <p>Enter the target <span>locations</span> of your campaign</p>
                     <div class="location" ng-repeat="(key, location) in locations">
-                        <input type="text" placeholder="Location" ng-model="location.location">
-                        <input type="text" placeholder="Target Towns/Cities" ng-model="location.cities">
-                        <input type="text" placeholder="Postcode(s) optional" ng-model="location.postcode">
+                        <input type="text" id="location_<%key%>" placeholder="Location" ng-model="location.location">
+                        <input type="text" id="city_<%key%>" placeholder="Target Towns/Cities" ng-model="location.cities">
+                        <input type="text" id="postcode_<%key%>" placeholder="Postcode(s) optional" ng-model="location.postcode">
                         <select name="" id="" ng-model="location.radius">
                             <option value="">Mile Radius</option>
-                            <option value="">5</option>
-                            <option value="">10</option>
-                            <option value="">15</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
                         </select>
                         <div class="link remove" ng-click="removeLocation(key)" ng-show="key">Remove</div>
                     </div>
@@ -37,15 +37,15 @@
                 </div>
 
                 <div class="form-wrap details" ng-show="isSelectedTab(3)">
-                    <p>Enter the <span>demographics</span> of your taget audience</p>
-                    <input type="text" placeholder="Age" ng-model="age">
-                    <select name=""  ng-model="gender" placeholder="Gender(s)">
+                    <p>Enter the <span>demographics</span> of your target audience</p>
+                    <input type="text" name="age" placeholder="Age" ng-model="age">
+                    <select name="gender" ng-model="gender" placeholder="Gender(s)">
+                        <option value="">Gender(s)</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Male & Females">Male & Females</option>
                     </select>
-                    <input type="text" placeholder="Gender(s)" ng-model="genders">
-                    <input type="text" placeholder="Languages" ng-model="languages">
+                    <input type="text" name="Languages" placeholder="Languages" ng-model="languages">
                 </div>
 
                 <div class="form-wrap details" ng-show="isSelectedTab(4)">

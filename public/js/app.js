@@ -1,5 +1,5 @@
 (function(){
-    angular.module('seelocal', ['ngRoute', 'LocalStorageModule', 'flow'], function($interpolateProvider) {
+    angular.module('seelocal', ['ngRoute', 'ngMessages', 'LocalStorageModule', 'flow'], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
     })
@@ -48,7 +48,6 @@
     .run(['AuthService', '$rootScope', '$templateCache', function(AuthService, $rootScope, $templateCache){
         AuthService.checkServerLogin();
         $rootScope.$on('$viewContentLoaded', function() {
-            console.log($templateCache);
             $templateCache.removeAll();
         });
 
@@ -87,7 +86,7 @@
             $location.path('/step/1');
         }
     }])
-    .controller('StepsController', ['$scope', '$http', '$location', '$routeParams', 'StepsService', 'localStorageService', 'AuthService', function($scope, $http, $location, $routeParams, StepsService, localStorageService, AuthService){
+    .controller('StepsController', ['$scope', '$http', '$location', '$rootScope', '$routeParams', 'StepsService', 'localStorageService', 'AuthService', function($scope, $http, $location, $rootScope, $routeParams, StepsService, localStorageService, AuthService){
         $scope.step = $routeParams.step;
         $scope.leftMarginPer = 18.7;
 
@@ -107,20 +106,20 @@
         };
 
         $scope.saveData = function(step){
-            StepsService.prepForSaveData(step);
+            $rootScope.$broadcast('saveData', step);
+            $location.path('step/' + step);
         };
 
         if (!AuthService.checkUserLoggedIn()){
             $location.path('/login');
         }
     }])
-    .controller('TabsController', ['$scope', 'TabsService', function($scope, TabsService){
-        $scope.selectedTab = TabsService.getSelectedTab();
+    .controller('TabsController', ['$scope', 'TabsService', '$rootScope', function($scope, TabsService, $rootScope){
+        $scope.selectedTab = TabsService.constructSelectedTab();
 
         $scope.selectTab = function(id){
             TabsService.setSelectedTab(id);
             $scope.selectedTab = id;
-            console.log(TabsService.getSelectedTab());
         };
 
         $scope.isSelectedTab = function(id){
@@ -134,32 +133,25 @@
             };
         }])
     .directive('navigationBottom', ['$route', function($route){
-        return {
-            restrict: 'E',
-            templateUrl:'templates/steps/navigation-bottom.html'
-        };
-    }])
-    .controller('ObjectivesController', ['$scope', '$http', '$location', 'TabsService', 'localStorageService', function($scope, $http, $location, TabsService, localStorageService){
-        $scope.objectives = [];
+            return {
+                restrict: 'E',
+                templateUrl:'templates/steps/navigation-bottom.html'
+            };
+        }])
+    .controller('ObjectivesController', ['$scope', '$http', '$location', '$rootScope', 'TabsService', 'localStorageService', function($scope, $http, $location, $rootScope, TabsService, localStorageService){
+            $scope.objectives = [];
 
-        $http.post('api/objectives').success(function(data){
-            $scope.objectives = data;
-        }).error(function(error){
-            console.log(error);
-        });
+            $http.post('api/objectives').success(function(data){
+                $scope.objectives = data;
+            }).error(function(error){
+                console.log(error);
+            });
 
-        $scope.$on('stepData', function(){
-            console.log(TabsService.getSelectedTab());
-            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
-           // $location.path('step/' + step);
-        });
+            $scope.$on('saveData', function(event, data){
+                localStorageService.set('campaign_objective', TabsService.selectedTab);
+            });
 
-        $scope.saveData = function(step){
-            console.log(TabsService.getSelectedTab());
-            localStorageService.set('campaign_objective', TabsService.getSelectedTab());
-            $location.path('step/' + step);
-        };
-    }])
+        }])
     .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         angular.element(document).ready(function () {
             autosize(jQuery('textarea'));
@@ -240,6 +232,11 @@
         $scope.isSelectedPlan = function(name){
             return $scope.selectedPlan == name;
         }
+
+
+        $scope.$on('saveData', function(){
+
+        });
     }])
 
     .controller('OverviewController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
@@ -290,10 +287,13 @@
                 if (input.length <= limit) return input;
                 return input.slice(0, limit) + '...';
             }
-    })
+        })
     .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
         $scope.name = localStorageService.get('campaign_name') || '';
         $scope.phone = localStorageService.get('campaign_phone') || '';
+        $scope.age = localStorageService.get('campaign_age') || '';
+        $scope.gender = localStorageService.get('campaign_gender') || '';
+        $scope.languages = localStorageService.get('campaign_languages') || '';
         $scope.locations = localStorageService.get('campaign_locations') || [{}];
         $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
         $scope.interests = [];
@@ -346,10 +346,26 @@
         $scope.removeLocation = function(key){
             $scope.locations.splice(key, 1);
         };
+        function clearArrayFromEmptyObjs(arr){
+            console.log(arr);
+            return arr.filter(function(obj){
+
+                return obj.hasOwnProperty();
+            });
+        }
+        $scope.$on('saveData', function(){
+            localStorageService.set('campaign_name',  $scope.name);
+            localStorageService.set('campaign_phone',  $scope.phone);
+            localStorageService.set('campaign_locations', $scope.locations);
+            localStorageService.set('campaign_age', $scope.age);
+            localStorageService.set('campaign_gender', $scope.gender);
+            localStorageService.set('campaign_languages', $scope.languages);
+            localStorageService.set('campaign_interests',  $scope.selectedInterests);
+            localStorageService.set('campaign_keywords',  $scope.keywords);
+            localStorageService.set('campaign_websites',  $scope.websites);
+        })
     }])
     .service('SharedProperties', function(){
-
-
          var properties = {
              selectedTab: 1
          };
@@ -363,19 +379,19 @@
          };
     })
     .service('TabsService', ['$route', 'localStorageService', function($route, localStorageService){
-
-            if ($route.current.params.step == 1)
-                var selectedTab = localStorageService.get('campaign_objective') || 1;
-            else{
-                var selectedTab = ($route.current.params.tab) ? +$route.current.params.tab : 1;
-            }
-
             return {
-                getSelectedTab: function(){
-                    return selectedTab;
+                selectedTab: '',
+                constructSelectedTab: function(){
+                    if ($route.current.params.step == 1){
+                        this.selectedTab = localStorageService.get('campaign_objective') || 1;
+                    }
+                    else{
+                        this.selectedTab = ($route.current.params.tab) ? +$route.current.params.tab : 1;
+                    }
+                    return this.selectedTab;
                 },
                 setSelectedTab: function(value){
-                    selectedTab = value;
+                    this.selectedTab = value;
                 }
             }
         }])
@@ -425,17 +441,18 @@
 
 
     .factory('StepsService', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
-         return {
-            calledStep: '',
-            prepForSaveData: function(step){
-                this.calledStep = step;
-                this.saveData();
-            },
-            saveData: function(){
-                $rootScope.$broadcast('saveData');
-            }
-         }
-    }]);
+             return {
+                calledStep: '',
+                prepForSaveData: function(step){
+                    this.calledStep = step;
+                    console.log(step);
+                    this.saveData();
+                },
+                saveData: function(){
+                    $rootScope.$broadcast('saveData');
+                }
+             }
+        }]);
 }());
 
 

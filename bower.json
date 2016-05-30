@@ -1,0 +1,6 @@
+{
+  "name": "seelocal",
+  "dependencies": {
+    "angular-material": "^1.0.9"
+  }
+}
