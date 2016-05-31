@@ -22,9 +22,9 @@
                 <div class="form-wrap details" ng-show="isSelectedTab(2)">
                     <p>Enter the target <span>locations</span> of your campaign</p>
                     <div class="location" ng-repeat="(key, location) in locations">
-                        <input type="text" id="location_<%key%>" placeholder="Location" ng-model="location.location">
-                        <input type="text" id="city_<%key%>" placeholder="Target Towns/Cities" ng-model="location.cities">
-                        <input type="text" id="postcode_<%key%>" placeholder="Postcode(s) optional" ng-model="location.postcode">
+                        <input type="text" id="location_<%key%>" ng-focus="autocomplete(key)" placeholder="Location" ng-model="location.location">
+                        <input type="text" id="locality_<%key%>" placeholder="Target Towns/Cities" ng-model="location.cities">
+                        <input type="text" id="postal_code_<%key%>" placeholder="Postcode(s) optional" ng-model="location.postcode">
                         <select name="" id="" ng-model="location.radius">
                             <option value="">Mile Radius</option>
                             <option value="5">5</option>

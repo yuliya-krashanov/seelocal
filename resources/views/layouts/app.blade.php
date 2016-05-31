@@ -85,8 +85,7 @@
     </footer>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNcmr2nFb300a0yCZAW3eAQ2QwoCK0mC0&signed_in=true&libraries=places&callback=initAutocomplete"
-            async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNcmr2nFb300a0yCZAW3eAQ2QwoCK0mC0&signed_in=true&libraries=places"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
 
 </body>

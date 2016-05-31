@@ -23,33 +23,33 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th ng-repeat="plan in plans | orderBy: plan.price"><% plan.price | currency: '£': 0 %></th>
+                        <th ng-repeat="plan in plans | orderBy: plan.price_0"><% plan['price_' + selectedPeriod] | currency: '£': 0 %></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Display ads shown</td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price"><% plan.display_ads_shown  %></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price_0"><% plan['display_ads_shown_' + selectedPeriod] %></td>
                     </tr>
                     <tr>
                         <td>Fully optimised display ads</td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.fully_optimized_display_ads == 1}"></i></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price_0"><i class="fa" ng-class="{'fa-check': plan.fully_optimized_display_ads == 1}"></i></td>
                     </tr>
                     <tr>
                         <td>Conversion optimised landing page</td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.conversion_optimised_landing == 1}"></i></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price_0"><i class="fa" ng-class="{'fa-check': plan.conversion_optimised_landing == 1}"></i></td>
                     </tr>
                     <tr>
                         <td>Brand awareness</td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.brand_awareness == 1}"></i></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price_0"><i class="fa" ng-class="{'fa-check': plan.brand_awareness == 1}"></i></td>
                     </tr>
                     <tr>
                         <td>Lead generation</td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price"><i class="fa" ng-class="{'fa-check': plan.lead_generation == 1}"></i></td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price_0"><i class="fa" ng-class="{'fa-check': plan.lead_generation == 1}"></i></td>
                     </tr>
                     <tr class="buttons">
                         <td></td>
-                        <td ng-repeat="plan in plans | orderBy: plan.price" ng-click="selectPlan(plan.title)" ng-class="{active: isSelectedPlan(plan.title) }">Select</td>
+                        <td ng-repeat="plan in plans | orderBy: plan.price" ng-click="selectPlan(plan.id, $index)" ng-class="{active: isSelectedPlan(plan.id) }">Select</td>
                     </tr>
                 </tbody>
             </table>

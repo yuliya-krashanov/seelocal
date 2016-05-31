@@ -156,13 +156,19 @@
         angular.element(document).ready(function () {
             autosize(jQuery('textarea'));
         });
+        $scope.promotion = localStorageService.get('campaign_promotion') || '';
+
+        $scope.$on('saveData', function(){
+            localStorageService.set('campaign_promotion',  $scope.promotion);
+        });
     }])
     .controller('DatesController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+
+        /* ---------------  initialize ----------------- */
         $scope.periods = [ '2 Weeks', '1 Month', '3 Months' ];
-
         $scope.selectedPeriod = localStorageService.get('campaign_period') || 0;
-
         $scope.showedDatesFields = false;
+        $scope.selectedPlan = localStorageService.get('campaign_plan') || false;
 
         var startDate = localStorageService.get('campaign_start_date') || null;
 
@@ -173,16 +179,24 @@
             $scope.startDate = new Date(localStorageService.get('campaign_start_date'));
         }
 
-        $scope.changeDatesFields = function(){
-            $scope.showedDatesFields = ($scope.showedDatesFields) ? false: true;
-        };
-
+        /* ---------------- periods ----------------- */
         $scope.setPeriod = function(key){
             $scope.selectedPeriod = key;
+            $scope.plans.forEach(function(item){
+                if (item.id == $scope.selectedPlan)
+                    $scope.selectedPrice = item['price_' + $scope.selectedPeriod];
+            });
             $scope.setEndDate();
         };
+
         $scope.isSelectedPeriod = function(key){
             return $scope.selectedPeriod === key;
+        };
+
+
+        /* ---------------- dates ------------------- */
+        $scope.changeDatesFields = function(){
+            $scope.showedDatesFields = ($scope.showedDatesFields) ? false: true;
         };
 
         $scope.setEndDate = function(){
@@ -217,25 +231,33 @@
 
         $scope.setEndDate();
 
+
+        /*-------------- plans --------------*/
         $http.post('api/plans').success(function(responce){
             $scope.plans = responce;
-            console.log($scope.plans);
         }).error(function(error){
             console.log(error);
         });
 
-        $scope.selectedPlan = localStorageService.get('campaign_plan') || false;
 
-        $scope.selectPlan = function(name){
-            $scope.selectedPlan = name;
+        $scope.selectPlan = function(id){
+            $scope.selectedPlan = id;
+            $scope.plans.forEach(function(item){
+                if (item.id == $scope.selectedPlan)
+                    $scope.selectedPrice = item['price_' + $scope.selectedPeriod];
+            });
         };
-        $scope.isSelectedPlan = function(name){
-            return $scope.selectedPlan == name;
+        $scope.isSelectedPlan = function(id){
+            return $scope.selectedPlan == id;
         }
 
-
+        /*--------------- saving to LocalStorage ---------------*/
         $scope.$on('saveData', function(){
-
+            localStorageService.set('campaign_period',  $scope.selectedPeriod);
+            localStorageService.set('campaign_start_date',  $scope.startDate);
+            localStorageService.set('campaign_end_date',  $scope.endDate);
+            localStorageService.set('campaign_plan', $scope.selectedPlan);
+            localStorageService.set('campaign_price', $scope.selectedPrice);
         });
     }])
 
@@ -288,7 +310,7 @@
                 return input.slice(0, limit) + '...';
             }
         })
-    .controller('DemographicsController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+    .controller('DemographicsController', ['$scope', '$http', 'localStorageService', 'PlacesAutocomplete', function($scope, $http, localStorageService, PlacesAutocomplete){
         $scope.name = localStorageService.get('campaign_name') || '';
         $scope.phone = localStorageService.get('campaign_phone') || '';
         $scope.age = localStorageService.get('campaign_age') || '';
@@ -319,7 +341,15 @@
             $scope.websites.push({});
         };
 
-        $http.post('api/interests').success(function(responce){  $scope.interests = responce; }).error(function(error){
+        /* -------------- interests -------------- */
+        $http.post('api/interests').success(function(responce){
+            $scope.interests = responce;
+            $scope.selectedInterests.forEach(function(selectInt, i, arr){
+                $scope.interests = $scope.interests.filter(function(inter, i){
+                    return inter.name !== selectInt.name;
+                });
+            })
+        }).error(function(error){
             console.log(error);
         });
 
@@ -339,30 +369,40 @@
             $scope.interests.splice(0);
         };
 
+        /* --------------- locations ---------------- */
+        $scope.autocomplete = function(i){
+            PlacesAutocomplete.initAutocomplete(i);
+        };
+
         $scope.addLocation = function(){
           $scope.locations.push({});
+          PlacesAutocomplete.initAutocomplete($scope.locations.length - 1);
         };
 
         $scope.removeLocation = function(key){
             $scope.locations.splice(key, 1);
         };
-        function clearArrayFromEmptyObjs(arr){
-            console.log(arr);
-            return arr.filter(function(obj){
 
-                return obj.hasOwnProperty();
+        /* ------------------ saving data to LocalStorage -------------- */
+        function clearArrayFromEmptyObjs(arr){
+            return arr.filter(function(obj){
+                for (key in obj){
+                    if (obj[key] === '')
+                     delete obj[key];
+                }
+                return Object.keys(obj).length > 1;
             });
         }
         $scope.$on('saveData', function(){
             localStorageService.set('campaign_name',  $scope.name);
             localStorageService.set('campaign_phone',  $scope.phone);
-            localStorageService.set('campaign_locations', $scope.locations);
+            localStorageService.set('campaign_locations', clearArrayFromEmptyObjs($scope.locations));
             localStorageService.set('campaign_age', $scope.age);
             localStorageService.set('campaign_gender', $scope.gender);
             localStorageService.set('campaign_languages', $scope.languages);
             localStorageService.set('campaign_interests',  $scope.selectedInterests);
-            localStorageService.set('campaign_keywords',  $scope.keywords);
-            localStorageService.set('campaign_websites',  $scope.websites);
+            localStorageService.set('campaign_keywords',  clearArrayFromEmptyObjs($scope.keywords));
+            localStorageService.set('campaign_websites',  clearArrayFromEmptyObjs($scope.websites));
         })
     }])
     .service('SharedProperties', function(){
@@ -395,6 +435,7 @@
                 }
             }
         }])
+
     .factory('AuthService', ['$http', 'localStorageService', function($http, localStorageService){
 
         return {
@@ -402,8 +443,9 @@
                 $http.post('api/auth/check').success(function(data){
                     if (data.remember_token)
                         localStorageService.set('token', data.remember_token);
-                    else
-                        localStorageService.remove('token');
+                    else{
+                        localStorageService.clearAll();
+                    }
 
                 }).error(function(error){
                     console.log(error);
@@ -439,6 +481,41 @@
         };
     }])
 
+    .factory('PlacesAutocomplete', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
+        var autocomplete, index,
+            componentForm = {
+                locality: 'long_name',
+                postal_code: 'short_name'
+            };
+
+        return {
+            initAutocomplete: function(key){
+                index = key;
+                autocomplete = new google.maps.places.Autocomplete(
+                   (document.getElementById('location_' + key)),
+                    {types: ['geocode']});
+                autocomplete.addListener('place_changed', this.fillInAddress);
+            },
+            fillInAddress: function(){
+                var place = autocomplete.getPlace();
+
+                for (var component in componentForm) {
+                    document.getElementById(component + '_' + index).value = '';
+                    document.getElementById(component + '_' + index).disabled = false;
+                }
+
+                // Get each component of the address from the place details
+                // and fill the corresponding field on the form.
+                for (var i = 0; i < place.address_components.length; i++) {
+                    var addressType = place.address_components[i].types[0];
+                    if (componentForm[addressType]) {
+                        var val = place.address_components[i][componentForm[addressType]];
+                        document.getElementById(addressType + '_' + index).value = val;
+                    }
+                }
+            }
+        };
+    }])
 
     .factory('StepsService', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
              return {

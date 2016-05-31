@@ -15,8 +15,12 @@ class CreateCampaignPlansTable extends Migration
         Schema::create('campaign_plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->decimal('price');
-            $table->integer('display_ads_shown');
+            $table->decimal('price_0');
+            $table->decimal('price_1');
+            $table->decimal('price_2');
+            $table->integer('display_ads_shown_0');
+            $table->integer('display_ads_shown_1');
+            $table->integer('display_ads_shown_2');
             $table->boolean('fully_optimized_display_ads');
             $table->boolean('conversion_optimised_landing');
             $table->boolean('brand_awareness');
