@@ -20,8 +20,8 @@
                     <ul class="overview">
                         <li><span class="title">Location(s) |</span> <span class="value"><ul><li ng-repeat="location in targeting.locations"><% location.location %></li></ul></span><a class="link pull-right" href="/step/2?tab=2">Edit</a></li>
                         <li><span class="title">Demographics |</span> <span class="value"><% targeting.gender %>, <% targeting.age %></span><a class="link pull-right" href="/step/2?tab=3">Edit</a></li>
-                        <li><span class="title">Interests |</span> <span class="value"><ul><li ng-repeat="interest in targeting.interests"><% interest.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=4">Edit</a></li>
-                        <li><span class="title">Keywords |</span> <span class="value"><ul><li ng-repeat="keyword in targeting.keywords"><% keyword.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=5">Edit</a></li>
+                        <li><span class="title">Interests |</span> <span class="value"><%  targeting.interests %></span><a class="link pull-right" href="/step/2?tab=4">Edit</a></li>
+                        <li><span class="title">Keywords |</span> <span class="value"><% targeting.keywords %></span><a class="link pull-right" href="/step/2?tab=5">Edit</a></li>
                         <li><span class="title">Target Websites |</span> <span class="value"><ul><li ng-repeat="website in targeting.websites"><% website.name %></li></ul></span><a class="link pull-right" href="/step/2?tab=6">Edit</a></li>
                     </ul>
                 </div>
@@ -45,7 +45,7 @@
                     </div>
                     <a class="link pull-right" href="/step/3?tab=4">Edit</a>
                 </div>
-                <div class="form-wrap details" ng-show="isSelectedTab(4)">
+                <div class="form-wrap details payment" ng-show="isSelectedTab(4)">
                     <p>Personal information</p>
                     <div class="row">
                         <input type="text" ng-model="fullName" placeholder="Full name" required />
@@ -65,6 +65,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <select ng-model="cardType">
+                                <option value="">Card type</option>
                                 <option value="mastercard">Mastercard</option>
                                 <option value="visa">Visa</option>
                             </select>
@@ -75,7 +76,7 @@
                             <input type="text" placeholder="Security code" ng-model="securityCode"/>
                         </div>
                     </div>
-                    <input type="checkbox" checked /> I accepted <a href="/terms-and-conditions">
+                    <div class="row"><input type="checkbox" checked /> I accepted <a href="/terms-and-conditions" class="link">terms & conditions</a></div>
                     <div class="confirm-button" ng-click="confirm()">Confirm & Pay</div>
                 </a>
                 </div>

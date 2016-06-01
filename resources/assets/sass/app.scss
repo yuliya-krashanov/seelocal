@@ -295,6 +295,32 @@ section.step {
               }
             }
           }
+          .overview{
+            list-style-type: none;
+            width: 100%;
+            max-width: 65%;
+            & > li{
+              margin-bottom: 15px;
+              position: relative;
+              @include flex(flex-start, flex-start);
+              .title{
+                font-family: $latoRegular;
+              }
+              .value{
+                margin-left: 5px;
+                ul{
+                  list-style-type: none;
+                  li{
+                    margin-bottom: 5px;
+                  }
+                }
+              }
+              .link{
+                position: absolute;
+                right: 0;
+              }
+            }
+          }
           p{
             margin-bottom: 15px;
             span{
@@ -304,7 +330,7 @@ section.step {
           & > p{
             width: 66%;
           }
-          input, select, textarea{
+          input[type=text], input[type=email], select, textarea{
             display: block;
             width: 310px;
             border: none;
@@ -337,6 +363,27 @@ section.step {
               overflow: hidden;
               line-height: 25px;
               height: 55px;
+            }
+          }
+          &.payment{
+            .row{
+              margin: 20px 0;
+              input[type=text], input[type=email], select{
+                width: 86%;
+                max-width: 270px;
+              }
+            }
+            .confirm-button{
+              width: 170px;
+              border-radius: 25px;
+              height: 45px;
+              color: #fff;
+              background-color: $green;
+              cursor: pointer;
+              @include flex(center, center);
+              font-size: $littleFontSize;
+              font-family: $latoRegular;
+              margin: 25px auto;
             }
           }
         }

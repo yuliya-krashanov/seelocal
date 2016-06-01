@@ -522,17 +522,28 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
 
             $scope.$on('saveData', function(event, data){
                 localStorageService.set('campaign_objective', TabsService.selectedTab);
+                localStorageService.set('campaign_objective_name', $scope.objectives[TabsService.selectedTab - 1].title);
             });
 
         }])
-    .controller('UploadingController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
+    .controller('UploadingController', ['$scope', '$http', 'localStorageService', 'SavingToLocalStorageService', function($scope, $http, localStorageService, SavingToLocalStorageService){
         angular.element(document).ready(function () {
             autosize(jQuery('textarea'));
         });
         $scope.promotion = localStorageService.get('campaign_promotion') || '';
+        $scope.images = {};
+        $scope.logo = {};
+
+        console.log($scope.images);
+
+        /*$scope.$on('flow::saveData', function(){
+
+        });*/
 
         $scope.$on('saveData', function(){
-            localStorageService.set('campaign_promotion',  $scope.promotion);
+            console.log($scope.images);
+           // $http.post('api/save-images')
+            SavingToLocalStorageService.saveToLocalStorage('campaign_promotion',  $scope.promotion);
         });
     }])
     .controller('DatesController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
@@ -635,47 +646,62 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
     }])
 
     .controller('OverviewController', ['$scope', '$http', 'localStorageService', function($scope, $http, localStorageService){
-        $scope.overview = [{
-                title: 'Campaign Name',
-                value: localStorageService.get('campaign_name') || '',
-                location: '/step/2?tab=1'
-            },
-            {
-                title: 'Campaign cost',
-                value: localStorageService.get('campaign_cost') || '',
-                location: '/step/4'
-            },
-            {
-                title: 'Timeframe',
-                value: localStorageService.get('campaign_period') || '',
-                location: '/step/4'
-            },
-            {
-                title: 'Objective',
-                value: localStorageService.get('campaign_objective') || '',
-                location: '/step/1'
-            },
-            {
-                title: 'Phone number',
-                value: localStorageService.get('campaign_phone') || '',
-                location: '/step/2?tab=1'
-            },
-            {
-                title: 'Promotion',
-                value: localStorageService.get('campaign_promotion') || '',
-                location: '/step/3?tab=5'
-            }
-        ];
+            var periods = [ '2 Weeks', '1 Month', '3 Months'],
+                interests = localStorageService.get('campaign_interests') || '',
+                keywords = localStorageService.get('campaign_keywords') || '';
 
-        $scope.targeting = {
-            locations: localStorageService.get('campaign_locations') || '',
-            gender: localStorageService.get('campaign_gender') || '',
-            age: localStorageService.get('campaign_age') || '',
-            interests: localStorageService.get('campaign_interests') || '',
-            keywords: localStorageService.get('campaign_keywords') || '',
-            websites: localStorageService.get('campaign_websites') || ''
-        };
-    }])
+            function joinWords(arr){
+                if (arr){
+                    return arr.map(function(item){
+                        return item.name;
+                    }).join(', ');
+                }
+                return arr;
+            }
+
+
+            $scope.overview = [{
+                    title: 'Campaign Name',
+                    value: localStorageService.get('campaign_name') || '',
+                    location: '/step/2?tab=1'
+                },
+                {
+                    title: 'Campaign cost',
+                    value: localStorageService.get('campaign_price') || '',
+                    location: '/step/4'
+                },
+                {
+                    title: 'Timeframe',
+                    value: periods[localStorageService.get('campaign_period')] || '',
+                    location: '/step/4'
+                },
+                {
+                    title: 'Objective',
+                    value: localStorageService.get('campaign_objective_name') || '',
+                    location: '/step/1'
+                },
+                {
+                    title: 'Phone number',
+                    value: localStorageService.get('campaign_phone') || '',
+                    location: '/step/2?tab=1'
+                },
+                {
+                    title: 'Promotion',
+                    value: localStorageService.get('campaign_promotion') || '',
+                    location: '/step/3?tab=5'
+                }
+            ];
+
+
+            $scope.targeting = {
+                locations: localStorageService.get('campaign_locations') || '',
+                gender: localStorageService.get('campaign_gender') || '',
+                age: localStorageService.get('campaign_age') || '',
+                interests: joinWords(interests),
+                keywords: joinWords(keywords),
+                websites: localStorageService.get('campaign_websites') || ''
+            };
+        }])
 
     .filter('excerptLimitTo', function(){
             return function(input, limit){
@@ -683,114 +709,114 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
                 return input.slice(0, limit) + '...';
             }
         })
-    .controller('DemographicsController', ['$scope', '$http', 'localStorageService', 'PlacesAutocomplete', function($scope, $http, localStorageService, PlacesAutocomplete){
-        $scope.name = localStorageService.get('campaign_name') || '';
-        $scope.phone = localStorageService.get('campaign_phone') || '';
-        $scope.age = localStorageService.get('campaign_age') || '';
-        $scope.gender = localStorageService.get('campaign_gender') || '';
-        $scope.languages = localStorageService.get('campaign_languages') || '';
-        $scope.locations = localStorageService.get('campaign_locations') || [{}];
-        $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
-        $scope.interests = [];
-        $scope.keywords = localStorageService.get('campaign_keywords') || [{},{},{},{}];
-        $scope.websites = localStorageService.get('campaign_websites') || [{},{},{},{}];
-        var keywordsLength = $scope.keywords.length;
-        var websitesLength = $scope.websites.length;
+    .controller('DemographicsController', ['$scope', '$http', 'localStorageService', 'PlacesAutocomplete', 'SavingToLocalStorageService', function($scope, $http, localStorageService, PlacesAutocomplete, SavingToLocalStorageService){
+            $scope.name = localStorageService.get('campaign_name') || '';
+            $scope.phone = localStorageService.get('campaign_phone') || '';
+            $scope.age = localStorageService.get('campaign_age') || '';
+            $scope.gender = localStorageService.get('campaign_gender') || '';
+            $scope.languages = localStorageService.get('campaign_languages') || '';
+            $scope.locations = localStorageService.get('campaign_locations') || [{}];
+            $scope.selectedInterests = localStorageService.get('campaign_interests') || [];
+            $scope.interests = [];
+            $scope.keywords = localStorageService.get('campaign_keywords') || [{},{},{},{}];
+            $scope.websites = localStorageService.get('campaign_websites') || [{},{},{},{}];
+            var keywordsLength = $scope.keywords.length;
+            var websitesLength = $scope.websites.length;
 
-        if(keywordsLength < 4) {
-            for (var i = 4 - keywordsLength; i > 0; i--) {
-                $scope.keywords.push({});
-            }
-        }
-        if(websitesLength < 4) {
-            for (var i = 4 - websitesLength; i > 0; i--) {
-                $scope.websites.push({});
-            }
-        }
-        $scope.addKeyword = function(){
-            $scope.keywords.push({});
-        };
-        $scope.addWebsite = function(){
-            $scope.websites.push({});
-        };
-
-        /* -------------- interests -------------- */
-        $http.post('api/interests').success(function(responce){
-            $scope.interests = responce;
-            $scope.selectedInterests.forEach(function(selectInt, i, arr){
-                $scope.interests = $scope.interests.filter(function(inter, i){
-                    return inter.name !== selectInt.name;
-                });
-            })
-        }).error(function(error){
-            console.log(error);
-        });
-
-        $scope.selectInterest = function(key){
-            $scope.selectedInterests.push( $scope.interests[key] );
-            $scope.interests.splice(key, 1);
-        };
-        $scope.unselectInterest = function(key){
-            $scope.interests.push( $scope.selectedInterests[key] );
-            $scope.selectedInterests.splice(key, 1);
-        };
-
-        $scope.selectAllInterests = function(){
-            $scope.interests.forEach(function(item){
-                $scope.selectedInterests.push( item );
-            });
-            $scope.interests.splice(0);
-        };
-
-        /* --------------- locations ---------------- */
-        $scope.autocomplete = function(i){
-            PlacesAutocomplete.initAutocomplete(i);
-        };
-
-        $scope.addLocation = function(){
-          $scope.locations.push({});
-          PlacesAutocomplete.initAutocomplete($scope.locations.length - 1);
-        };
-
-        $scope.removeLocation = function(key){
-            $scope.locations.splice(key, 1);
-        };
-
-        /* ------------------ saving data to LocalStorage -------------- */
-        function clearArrayFromEmptyObjs(arr){
-            return arr.filter(function(obj){
-                for (key in obj){
-                    if (obj[key] === '')
-                     delete obj[key];
+            if(keywordsLength < 4) {
+                for (var i = 4 - keywordsLength; i > 0; i--) {
+                    $scope.keywords.push({});
                 }
-                return Object.keys(obj).length > 1;
+            }
+            if(websitesLength < 4) {
+                for (var i = 4 - websitesLength; i > 0; i--) {
+                    $scope.websites.push({});
+                }
+            }
+            $scope.addKeyword = function(){
+                $scope.keywords.push({});
+            };
+            $scope.addWebsite = function(){
+                $scope.websites.push({});
+            };
+
+            /* -------------- interests -------------- */
+            $http.post('api/interests').success(function(responce){
+                $scope.interests = responce;
+                $scope.selectedInterests.forEach(function(selectInt, i, arr){
+                    $scope.interests = $scope.interests.filter(function(inter, i){
+                        return inter.name !== selectInt.name;
+                    });
+                })
+            }).error(function(error){
+                console.log(error);
             });
-        }
-        $scope.$on('saveData', function(){
-            localStorageService.set('campaign_name',  $scope.name);
-            localStorageService.set('campaign_phone',  $scope.phone);
-            localStorageService.set('campaign_locations', clearArrayFromEmptyObjs($scope.locations));
-            localStorageService.set('campaign_age', $scope.age);
-            localStorageService.set('campaign_gender', $scope.gender);
-            localStorageService.set('campaign_languages', $scope.languages);
-            localStorageService.set('campaign_interests',  $scope.selectedInterests);
-            localStorageService.set('campaign_keywords',  clearArrayFromEmptyObjs($scope.keywords));
-            localStorageService.set('campaign_websites',  clearArrayFromEmptyObjs($scope.websites));
-        })
-    }])
+
+            $scope.selectInterest = function(key){
+                $scope.selectedInterests.push( $scope.interests[key] );
+                $scope.interests.splice(key, 1);
+            };
+            $scope.unselectInterest = function(key){
+                $scope.interests.push( $scope.selectedInterests[key] );
+                $scope.selectedInterests.splice(key, 1);
+            };
+
+            $scope.selectAllInterests = function(){
+                $scope.interests.forEach(function(item){
+                    $scope.selectedInterests.push( item );
+                });
+                $scope.interests.splice(0);
+            };
+
+            /* --------------- locations ---------------- */
+            $scope.autocomplete = function(i){
+                PlacesAutocomplete.initAutocomplete(i);
+            };
+
+            $scope.addLocation = function(){
+              $scope.locations.push({});
+              PlacesAutocomplete.initAutocomplete($scope.locations.length - 1);
+            };
+
+            $scope.removeLocation = function(key){
+                $scope.locations.splice(key, 1);
+            };
+
+            /* ------------------ saving data to LocalStorage -------------- */
+
+            function saveLocationsAutocomplete(){
+                $scope.locations.forEach(function(location, i, arr){
+                    location.location = document.getElementById('location_' + i).value;
+                    location.cities = document.getElementById('locality_' + i).value;
+                    location.postcode = document.getElementById('postal_code_' + i).value;
+                });
+            }
+            $scope.$on('saveData', function(){
+                saveLocationsAutocomplete();
+                SavingToLocalStorageService.saveToLocalStorage('campaign_name',  $scope.name);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_phone',  $scope.phone);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_locations',  SavingToLocalStorageService.clearArrayFromEmptyObjs($scope.locations));
+                SavingToLocalStorageService.saveToLocalStorage('campaign_age', $scope.age);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_gender', $scope.gender);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_languages', $scope.languages);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_interests',  $scope.selectedInterests);
+                SavingToLocalStorageService.saveToLocalStorage('campaign_keywords',   SavingToLocalStorageService.clearArrayFromEmptyObjs($scope.keywords));
+                SavingToLocalStorageService.saveToLocalStorage('campaign_websites',   SavingToLocalStorageService.clearArrayFromEmptyObjs($scope.websites));
+            })
+        }])
     .service('SharedProperties', function(){
-         var properties = {
-             selectedTab: 1
-         };
-         return {
-             getProperty: function(property){
-                 return properties[property];
-             },
-             setProperty: function(property, value){
-                 properties[property] = value;
-             }
-         };
-    })
+             var properties = {
+                 selectedTab: 1
+             };
+             return {
+                 getProperty: function(property){
+                     return properties[property];
+                 },
+                 setProperty: function(property, value){
+                     properties[property] = value;
+                 }
+             };
+        })
     .service('TabsService', ['$route', 'localStorageService', function($route, localStorageService){
             return {
                 selectedTab: '',
@@ -889,6 +915,26 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
             }
         };
     }])
+
+    .factory('SavingToLocalStorageService', ['localStorageService', function(localStorageService){
+            return {
+                clearArrayFromEmptyObjs: function(arr){
+                    return arr.filter(function(obj){
+                        for (key in obj){
+                            if (obj[key] === '')
+                                delete obj[key];
+                        }
+                        return Object.keys(obj).length > 1;
+                    });
+                },
+                saveToLocalStorage: function(item, data){
+                    if (data.toString() !== '')
+                        localStorageService.set(item, data);
+                    else
+                        localStorageService.remove(item);
+                }
+            };
+        }])
 
     .factory('StepsService', ['$http', '$rootScope', 'localStorageService', function($http, $rootScope, localStorageService){
              return {

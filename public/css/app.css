@@ -272,13 +272,43 @@ section.step {
                   margin-bottom: 0; }
                 section.step .wrap .content .form-wrap.details .upload .thumb-wrap .thumb .btn-group {
                   margin-top: 10px; }
+          section.step .wrap .content .form-wrap.details .overview {
+            list-style-type: none;
+            width: 100%;
+            max-width: 65%; }
+            section.step .wrap .content .form-wrap.details .overview > li {
+              margin-bottom: 15px;
+              position: relative;
+              -webkit-align-items: flex-start;
+              -ms-flex-align: start;
+              align-items: flex-start;
+              -webkit-justify-content: flex-start;
+              -ms-flex-pack: start;
+              justify-content: flex-start;
+              -webkit-flex-direction: row;
+              -ms-flex-direction: row;
+              flex-direction: row;
+              display: -webkit-flex;
+              display: -ms-flexbox;
+              display: flex; }
+              section.step .wrap .content .form-wrap.details .overview > li .title {
+                font-family: "LatoRegular", sans-serif; }
+              section.step .wrap .content .form-wrap.details .overview > li .value {
+                margin-left: 5px; }
+                section.step .wrap .content .form-wrap.details .overview > li .value ul {
+                  list-style-type: none; }
+                  section.step .wrap .content .form-wrap.details .overview > li .value ul li {
+                    margin-bottom: 5px; }
+              section.step .wrap .content .form-wrap.details .overview > li .link {
+                position: absolute;
+                right: 0; }
           section.step .wrap .content .form-wrap.details p {
             margin-bottom: 15px; }
             section.step .wrap .content .form-wrap.details p span {
               color: #4dc01d; }
           section.step .wrap .content .form-wrap.details > p {
             width: 66%; }
-          section.step .wrap .content .form-wrap.details input, section.step .wrap .content .form-wrap.details select, section.step .wrap .content .form-wrap.details textarea {
+          section.step .wrap .content .form-wrap.details input[type=text], section.step .wrap .content .form-wrap.details input[type=email], section.step .wrap .content .form-wrap.details select, section.step .wrap .content .form-wrap.details textarea {
             display: block;
             width: 310px;
             border: none;
@@ -286,9 +316,9 @@ section.step {
             margin-bottom: 20px;
             padding-left: 3px;
             outline: none; }
-            section.step .wrap .content .form-wrap.details input::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder, section.step .wrap .content .form-wrap.details textarea::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details textarea::-moz-placeholder {
+            section.step .wrap .content .form-wrap.details input[type=text]::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input[type=text]::-moz-placeholder, section.step .wrap .content .form-wrap.details input[type=email]::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details input[type=email]::-moz-placeholder, section.step .wrap .content .form-wrap.details select::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details select::-moz-placeholder, section.step .wrap .content .form-wrap.details textarea::-webkit-input-placeholder, section.step .wrap .content .form-wrap.details textarea::-moz-placeholder {
               color: #252525; }
-            section.step .wrap .content .form-wrap.details input.ng-invalid, section.step .wrap .content .form-wrap.details select.ng-invalid, section.step .wrap .content .form-wrap.details textarea.ng-invalid {
+            section.step .wrap .content .form-wrap.details input[type=text].ng-invalid, section.step .wrap .content .form-wrap.details input[type=email].ng-invalid, section.step .wrap .content .form-wrap.details select.ng-invalid, section.step .wrap .content .form-wrap.details textarea.ng-invalid {
               color: #a94442; }
           section.step .wrap .content .form-wrap.details select {
             display: inline-block;
@@ -306,6 +336,33 @@ section.step {
               overflow: hidden;
               line-height: 25px;
               height: 55px; }
+          section.step .wrap .content .form-wrap.details.payment .row {
+            margin: 20px 0; }
+            section.step .wrap .content .form-wrap.details.payment .row input[type=text], section.step .wrap .content .form-wrap.details.payment .row input[type=email], section.step .wrap .content .form-wrap.details.payment .row select {
+              width: 86%;
+              max-width: 270px; }
+          section.step .wrap .content .form-wrap.details.payment .confirm-button {
+            width: 170px;
+            border-radius: 25px;
+            height: 45px;
+            color: #fff;
+            background-color: #4dc01d;
+            cursor: pointer;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            font-size: 16px;
+            font-family: "LatoRegular", sans-serif;
+            margin: 25px auto; }
         section.step .wrap .content .form-wrap.objective {
           -webkit-align-items: center;
           -ms-flex-align: center;
