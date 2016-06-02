@@ -34,11 +34,11 @@ return [
         'url'   => route('admin.information'),
     ],
 
-  /*  [
+    [
         'title'    => 'Campaign Plans',
         'priority' => 200,
         'model'    => \App\Campaign_Plan::class
-    ],*/
+    ],
 
     // Examples
     // [

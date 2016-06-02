@@ -5,7 +5,7 @@
 
 <section class="steps-navigation">
     <ul>
-        <li ng-repeat="stepNum in [1,2,3,4,5]" ng-class="{active: isStepActive(stepNum), passed: isStepPassed(stepNum)}" style="left: <% leftMarginPer*(stepNum-1) %>%; z-index: <% 7 - stepNum %>" >
+        <li ng-repeat="stepNum in [1,2,3,4,5]" ng-class="{active: isStepActive(stepNum), passed: isStepPassed(stepNum)}" ng-style="{'left': leftMarginPer*(stepNum-1) + '%', 'z-index':  7 - stepNum }" >
             <a href="/step/<% stepNum %>">Step <% stepNum %></a>
         </li>
     </ul>
