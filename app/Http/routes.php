@@ -41,6 +41,8 @@ Route::group(array('prefix' => 'api'), function() {
 
    Route::post('/plans', 'StepsController@getPlans');
 
+   Route::any('/upload_images', 'StepsController@uploadImages');
+
    Route::post('/auth/register', 'Auth\AuthController@register');
 
    Route::post('/auth/login', 'Auth\AuthController@login');

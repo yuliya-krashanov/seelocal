@@ -38,6 +38,26 @@ class StepsController extends Controller
     }
 
 
+    public function uploadImages(Request $request){
+        return $request->file();
+    }
+
+    public function moveImagesFromTemp($images){
+        foreach($images as $image){
+            rename(public_path() . 'images/temp/'. $image, public_path() . 'images/uploads/' . $image);
+        }
+
+        if ($handle = opendir(public_path() .'images/temp/')) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
+                    unlink(public_path() .'images/temp/'. $file);
+                }
+            }
+            closedir($handle);
+        }
+
+    }
+
     public function saveCampaign(Request $request){
 
     }

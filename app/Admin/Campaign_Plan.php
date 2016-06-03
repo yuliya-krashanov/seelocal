@@ -2,13 +2,15 @@
 
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
-AdminSection::registerModel(Campaign_Plan::class, function (ModelConfiguration $model) {
+AdminSection::registerModel(App\Campaign_Plan::class, function (ModelConfiguration $model) {
     $model->setTitle('Campaign Plans');
 // Display
     $model->onDisplay(function () {
         $display = AdminDisplay::table()->setColumns([
             AdminColumn::link('title')->setLabel('Title'),
-            AdminColumn::string('price_')->setLabel('Price'),
+            AdminColumn::text('price_0')->setLabel('Price (2 Weeks)'),
+            AdminColumn::text('price_1')->setLabel('Price (1 Month)'),
+            AdminColumn::text('price_2')->setLabel('Price (3 Months)'),
         ]);
         $display->paginate(15);
         return $display;
@@ -17,7 +19,7 @@ AdminSection::registerModel(Campaign_Plan::class, function (ModelConfiguration $
     $model->onCreateAndEdit(function () {
         return $form = AdminForm::panel()->addBody(
             AdminFormElement::text('title', 'Title')->required(),
-            AdminFormElement::text('price_0', 'Price')->required()
+            AdminFormElement::textAddon('price_0', 'Price')->setPlacement('£')->required()
         );
     });
-})->addMenuPage(Campaign_Plan::class, 0);
+});

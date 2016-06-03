@@ -36,8 +36,12 @@ return [
 
     [
         'title'    => 'Campaign Plans',
-        'priority' => 200,
         'model'    => \App\Campaign_Plan::class
+    ],
+
+    [
+        'title'    => 'Users',
+        'model'    => \App\User::class
     ],
 
     // Examples

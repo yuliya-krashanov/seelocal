@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <base href="/"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Seelocal</title>
@@ -87,6 +88,12 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNcmr2nFb300a0yCZAW3eAQ2QwoCK0mC0&signed_in=true&libraries=places"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
-
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </body>
 </html>

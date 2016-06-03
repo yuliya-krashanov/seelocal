@@ -40,7 +40,9 @@
                 .setPrefix('seelocal');
 
             flowFactoryProvider.defaults = {
-              target: '../images/temp'
+                maxChunkRetries: 1,
+                chunkRetryInterval: 5000,
+                target: 'api/upload_images'
             };
 
     }])
@@ -158,18 +160,24 @@
             autosize(jQuery('textarea'));
         });
         $scope.promotion = localStorageService.get('campaign_promotion') || '';
-        $scope.images = {};
-        $scope.logo = {};
+        $scope.images =  localStorageService.get('campaign_images') || {};
+        $scope.logo =  localStorageService.get('campaign_logo') || {};
 
         console.log($scope.images);
 
-        /*$scope.$on('flow::saveData', function(){
-
+       /* $scope.$on('flow::complete', function(event, $flow, flowFile){
+            console.log(event);
+            console.log($flow);
+            console.log(flowFile);
         });*/
+
+
 
         $scope.$on('saveData', function(){
             console.log($scope.images);
            // $http.post('api/save-images')
+            localStorageService.set('campaign_images',  $scope.images);
+            localStorageService.set('campaign_logo',  $scope.logo);
             SavingToLocalStorageService.saveToLocalStorage('campaign_promotion',  $scope.promotion);
         });
     }])
