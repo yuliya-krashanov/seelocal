@@ -27,20 +27,17 @@ elixir(function(mix) {
     ], null, 'public/css');
 
     mix.scripts([
-        'angular.min.js',
-        'angular-route.min.js',
-        'angular-local-storage.min.js',
-        'angular-messages.min.js',
-        'ng-flow-standalone.min.js',
-        'jquery.min.js',
-        'bootstrap.min.js',
-        'autosize.min.js',
+        'lib/angular.min.js',
+        'lib/angular-route.min.js',
+        'lib/angular-local-storage.min.js',
+        'lib/angular-messages.min.js',
+        'lib/ng-flow-standalone.min.js',
+        'lib/jquery.min.js',
+        'lib/bootstrap.min.js',
+        'lib/autosize.min.js',
         'app.js',
-    ], null, 'public/js')
-        .scripts([
-          /*  'bootstrap.min.js',
-            'dataTables.bootstrap.min.js',*/
-        ], 'public/js/admin.js');
+    ], null, 'public/js');
+
 
     mix.version([
         'public/css/all.css',

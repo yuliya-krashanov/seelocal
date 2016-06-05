@@ -544,8 +544,6 @@ d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active"
             console.log(flowFile);
         });*/
 
-
-
         $scope.$on('saveData', function(){
             console.log($scope.images);
            // $http.post('api/save-images')

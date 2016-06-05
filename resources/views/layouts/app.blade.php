@@ -43,11 +43,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
 
-                        <li ng-show="logged"><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
-                        <li ng-show="logged"><a href="/account">Your Account</a></li>
-                        <li ng-show="logged"><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
-                        <li ng-hide="logged"><a href="/login">Log In</a></li>|
-                        <li ng-hide="logged"><a href="/register">Register</a></li>
+                        <li ng-if="logged"><a href="http://seelocal.co.uk/#getintouch" target="_blank">Contact Us</a></li>  |
+                        <li ng-if="logged"><a href="/account">Your Account</a></li>
+                        <li ng-if="logged"><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
+                        <li ng-if="!logged"><a href="/login">Log In</a></li>|
+                        <li ng-if="!logged"><a href="/register">Register</a></li>
 
                         {{--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -78,8 +78,8 @@
                 <div class="pull-left copyright">&copy; <a href="http://seelocal.co.uk">SeeLocal</a></div>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url('/terms-conditions') }}">Terms & Conditions</a></li> |
-                    <li><a href="{{ url('/privacy') }}">Privacy</a></li>
+                    <li><a href="'/terms-conditions'">Terms & Conditions</a></li> |
+                    <li><a href="'/privacy'">Privacy</a></li>
                 </ul>
             </div>
         </div>
@@ -89,11 +89,11 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNcmr2nFb300a0yCZAW3eAQ2QwoCK0mC0&signed_in=true&libraries=places"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
     <script type="text/javascript">
-        $.ajaxSetup({
+     /*   $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
+        });*/
     </script>
 </body>
 </html>

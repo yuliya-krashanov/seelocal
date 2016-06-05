@@ -3,7 +3,7 @@
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 AdminSection::registerModel(App\User::class, function (ModelConfiguration $model) {
-    $model->setTitle('Campaign Plans');
+    $model->setTitle('Users');
 // Display
     $model->onDisplay(function () {
         $display = AdminDisplay::table()->setColumns([
@@ -23,7 +23,7 @@ AdminSection::registerModel(App\User::class, function (ModelConfiguration $model
             AdminFormElement::text('last_name', 'Last name')->required(),
             AdminFormElement::text('last_name', 'Last name')->required(),
             AdminFormElement::text('company_name', 'Company')->required(),
-            AdminFormElement::text('phone_number', 'Phone Number')->required(),
+            AdminFormElement::text('phone_number', 'Phone Number')->required()
 
         );
     });

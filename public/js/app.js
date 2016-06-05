@@ -171,8 +171,6 @@
             console.log(flowFile);
         });*/
 
-
-
         $scope.$on('saveData', function(){
             console.log($scope.images);
            // $http.post('api/save-images')
