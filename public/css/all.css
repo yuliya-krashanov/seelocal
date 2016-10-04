@@ -101,16 +101,12 @@ section.steps-navigation {
         width: 100%;
         height: 100%;
         cursor: default;
-        -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
-        -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
-        -webkit-flex-direction: row;
         -ms-flex-direction: row;
         flex-direction: row;
-        display: -webkit-flex;
         display: -ms-flexbox;
         display: flex; }
       section.steps-navigation ul li.active {
@@ -147,16 +143,12 @@ section.step {
           padding-left: 25px;
           border: 1px solid #f6f6f6;
           border-left: none;
-          -webkit-align-items: center;
           -ms-flex-align: center;
           align-items: center;
-          -webkit-justify-content: flex-start;
           -ms-flex-pack: start;
           justify-content: flex-start;
-          -webkit-flex-direction: row;
           -ms-flex-direction: row;
           flex-direction: row;
-          display: -webkit-flex;
           display: -ms-flexbox;
           display: flex; }
           section.step .wrap aside ul li:first-child {
@@ -228,16 +220,12 @@ section.step {
               width: 255px;
               height: 170px;
               background-color: #f1f0f0;
-              -webkit-align-items: center;
               -ms-flex-align: center;
               align-items: center;
-              -webkit-justify-content: center;
               -ms-flex-pack: center;
               justify-content: center;
-              -webkit-flex-direction: row;
               -ms-flex-direction: row;
               flex-direction: row;
-              display: -webkit-flex;
               display: -ms-flexbox;
               display: flex; }
               section.step .wrap .content .form-wrap.details .upload .drop span {
@@ -245,16 +233,12 @@ section.step {
                 height: 80px;
                 background-color: #dddadc;
                 cursor: pointer;
-                -webkit-align-items: center;
                 -ms-flex-align: center;
                 align-items: center;
-                -webkit-justify-content: center;
                 -ms-flex-pack: center;
                 justify-content: center;
-                -webkit-flex-direction: row;
                 -ms-flex-direction: row;
                 flex-direction: row;
-                display: -webkit-flex;
                 display: -ms-flexbox;
                 display: flex; }
                 section.step .wrap .content .form-wrap.details .upload .drop span i {
@@ -285,16 +269,12 @@ section.step {
             section.step .wrap .content .form-wrap.details .overview > li {
               margin-bottom: 15px;
               position: relative;
-              -webkit-align-items: flex-start;
               -ms-flex-align: start;
               align-items: flex-start;
-              -webkit-justify-content: flex-start;
               -ms-flex-pack: start;
               justify-content: flex-start;
-              -webkit-flex-direction: row;
               -ms-flex-direction: row;
               flex-direction: row;
-              display: -webkit-flex;
               display: -ms-flexbox;
               display: flex; }
               section.step .wrap .content .form-wrap.details .overview > li .title {
@@ -354,32 +334,24 @@ section.step {
             color: #fff;
             background-color: #4dc01d;
             cursor: pointer;
-            -webkit-align-items: center;
             -ms-flex-align: center;
             align-items: center;
-            -webkit-justify-content: center;
             -ms-flex-pack: center;
             justify-content: center;
-            -webkit-flex-direction: row;
             -ms-flex-direction: row;
             flex-direction: row;
-            display: -webkit-flex;
             display: -ms-flexbox;
             display: flex;
             font-size: 16px;
             font-family: "LatoRegular", sans-serif;
             margin: 25px auto; }
         section.step .wrap .content .form-wrap.objective {
-          -webkit-align-items: center;
           -ms-flex-align: center;
           align-items: center;
-          -webkit-justify-content: center;
           -ms-flex-pack: center;
           justify-content: center;
-          -webkit-flex-direction: column;
           -ms-flex-direction: column;
           flex-direction: column;
-          display: -webkit-flex;
           display: -ms-flexbox;
           display: flex; }
           section.step .wrap .content .form-wrap.objective .title {
@@ -407,42 +379,31 @@ section.date-step {
     background-color: #fafafa;
     height: 60px;
     padding-left: 25px;
-    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
   section.date-step .wrap .choose-period ul {
     width: 100%;
     height: 125px;
-    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-justify-content: space-around;
     -ms-flex-pack: distribute;
     justify-content: space-around;
-    display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
     display: inline-flex; }
     section.date-step .wrap .choose-period ul li {
       display: inline-block;
-      -webkit-align-items: center;
       -ms-flex-align: center;
       align-items: center;
-      -webkit-justify-content: center;
       -ms-flex-pack: center;
       justify-content: center;
-      -webkit-flex-direction: row;
       -ms-flex-direction: row;
       flex-direction: row;
-      display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
       background-color: #fafafa;
